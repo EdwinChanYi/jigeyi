@@ -1,0 +1,41 @@
+import scrapy
+from scrapy.selector import Selector
+from scrapy.selector import HtmlXPathSelector
+from scrapy.http import HtmlResponse
+import re
+from scrapy.spider import BaseSpider
+from scrapy.http import Request
+from scrapy import optional_features
+import os
+import urllib
+optional_features.remove('boto')
+class CaipuSpider(scrapy.spiders.Spider):
+	name="xiaohau"
+	allowed_domains = ["xiaohuar.com"]
+	start_urls = [
+	        "http://www.xiaohuar.com/hua/",
+			    ]
+	def parse(self, response):
+		hxs = HtmlXPathSelector(response)
+		print response.url
+		if re.match('http://www.xiaohuar.com/hua/', response.url): 
+			items = hxs.select('//div[@class="item_list infinite_scroll"]/div') 
+			print("hello world")
+			for i in range(len(items)):
+				src = hxs.select('//div[@class="item_list infinite_scroll"]/div[%d]//div[@class="img"]/a/img/@src' % i).extract()
+				name = hxs.select('//div[@class="item_list infinite_scroll"]/div[%d]//div[@class="img"]/span/text()' % i).extract() 
+				school = hxs.select('//div[@class="item_list infinite_scroll"]/div[%d]//div[@class="img"]/div[@class="btns"]/a/text()' % i).extract() 
+				print(src, name, school)
+				if src:	
+					ab_src = "http://www.xiaohuar.com" + src[0]
+					file_name = "%s_%s.jpg" % (school[0].encode('utf-8'), name[0].encode('utf-8'))
+					file_path = os.path.join("/home/chenyiwei/jigeyi", file_name)
+					urllib.urlretrieve(ab_src, file_path)
+		#print(response, type(response))
+		#from scrapy.http.response.html import HtmlResponse
+		#print(response.body_as_unicode())						 
+		#current_url = response.url ##response url
+		#body = response.body  #response html
+		#unicode_body = response.body_as_unicode()#html unicode
+		#print unicode_body
+
