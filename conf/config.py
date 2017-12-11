@@ -3,7 +3,7 @@ db_config = {
         'host'      : 'localhost',
         'user'      : 'root',
         'password'  : '123456',
-        'db'        : 'test',
+        'db'        : 'jigeyi',
         'port'      : 3306,
         'charset'   : 'utf8',
         'num'       : 5 #连接池连接数
@@ -13,7 +13,7 @@ db_config = {
         'host'      : 'localhost',
         'user'      : 'root',
         'password'  : '123456',
-        'db'        : 'test',
+        'db'        : 'jigeyi',
         'port'      : 3306,
         'charset'   : 'utf8',
         'num'       : 5 #连接池连接数
