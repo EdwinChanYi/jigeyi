@@ -55,7 +55,7 @@ if __name__ == "__main__":
          dict(autoreload=True, serve_traceback=True)),
     ], **settings)
     # app = make_app()
-    app.listen(8888)
+    app.listen(8000)
     Db.init()       #初始化db连接池
     Redis.init()    #初始化redis连接池
     print('app start1')
