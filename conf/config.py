@@ -2,7 +2,7 @@ db_config = {
     'master' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'test',
         'port'      : 3306,
         'charset'   : 'utf8',
@@ -12,7 +12,7 @@ db_config = {
     'slave' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'test',
         'port'      : 3306,
         'charset'   : 'utf8',
