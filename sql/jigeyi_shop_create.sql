@@ -1,0 +1,20 @@
+CREATE TABLE `shop` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `code` varchar(20) NOT NULL DEFAULT '' COMMENT '商店代码,按照店名拼音大写,也用作登录账号',
+  `password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
+  `address` varchar(50) NOT NULL DEFAULT '' COMMENT '地址',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '店名',
+  `contact` varchar(50) NOT NULL COMMENT '联系方式',
+  `contact_bak` varchar(50) NOT NULL DEFAULT '' COMMENT '备用联系方式',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `phone` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
+  `db` varchar(10) NOT NULL DEFAULT '' COMMENT '数据库名,为小写字母',
+  `host` varchar(100) NOT NULL DEFAULT '' COMMENT '域名',
+  `start_time` int(11) NOT NULL DEFAULT '0' COMMENT '合作开始时间',
+  `end_time` int(11) NOT NULL DEFAULT '0' COMMENT '合作结束时间',
+  `mark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `status` tinyint(1) DEFAULT NULL COMMENT '-1:删除,0-停用,1-启用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商店信息表'
