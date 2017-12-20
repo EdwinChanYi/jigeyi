@@ -4,3 +4,6 @@ bus_e = {
     # 异常名称              编号              msg
     'TEST_ERROE' : {'code' : 10000, 'msg' : 'test err'},
 }
+
+# redis key
+REDIS_SHOP_DETAIL_HOST = 'shop_detail_host_%s'

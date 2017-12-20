@@ -47,6 +47,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     # 登录验证,暂时写死
     def get_current_user(self):
+        print('current user')
         return 1
 
     # 初始化
