@@ -10,9 +10,24 @@ import scrapy
 
 class CrawlerJigeyiItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-	caiBigType = scrapy.Field()
-	caiSmallType = scrapy.Field()
-	caiName = scrapy.Field()
-	caiPic = scrapy.Field()
-	caiLink = scrapy.Field()
+	materialBigId = scrapy.Field()
+	materialSmallId = scrapy.Field()
+	materialSmallType = scrapy.Field()
+	materialName = scrapy.Field()
+	materialBigName = scrapy.Field()
+	materialPic = scrapy.Field()
+	matRecipeBigId = scrapy.Field()
+	materialIntroduct = scrapy.Field()
+	itemType = scrapy.Field()
+class CrawlerJigeyiRecipeItem(scrapy.Item):
+	recipeId = scrapy.Field()
+	recipeName = scrapy.Field()
+	recipeIntroduct =  scrapy.Field()
+	recipeStep =  scrapy.Field()
+	recipeImage = scrapy.Field()
+	itemType = scrapy.Field()
+class CrawlerJigeyiMaterialToRecipeItem(scrapy.Item):
+	matSmallId = scrapy.Field()
+	recSmallId = scrapy.Field()
+
+

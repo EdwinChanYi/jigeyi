@@ -17,7 +17,16 @@ ROBORSTXT_OBEY = True
 DOWNLOAD_HANDLERS = {
 	        'S3':None,
 }
-ITEM_PIPELINES = {'crawler_jigeyi.pipelines.CrawlerJigeyiPipeline':100}
+ITEM_PIPELINES = {'crawler_jigeyi.pipelines.CrawlerJigeyiPipeline':100,
+}
+MYSQL_HOST = '127.0.0.1'
+MYSQL_DBNAME = 'material'     
+MYSQL_USER = 'root'     
+MYSQL_PASSWD = '123456'    
+
+MYSQL_PORT = 3306   
+
+SCHEDULER_ORDER = 'BFO'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'crawler_jigeyi (+http://www.yourdomain.com)'
 

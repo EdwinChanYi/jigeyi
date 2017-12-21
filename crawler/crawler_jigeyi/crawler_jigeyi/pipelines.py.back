@@ -1,0 +1,26 @@
+
+class DBPipeline(object):
+
+    def __init__(self):
+	    self.db_pool = adbapi.ConnectionPool('MySQLdb',db='DbCenter',
+		user='root',passwd='123456',cursorclass=MySQLdb.cursors.DictCursor,use_unicode=True)
+
+	def process_item(self, item, spider):
+		query = self.db_pool.runInteraction(self._conditional_insert, item)
+		query.addErrback(self.handle_error)
+		return item
+	def _conditional_insert(self, tx, item):
+		tx.execute("select nid from company where company = %s", (item['company'][0], ))
+		result = tx.fetchone()
+		if result:
+			pass
+		else:
+			phone_obj = phone_re.search(item['info'][0].strip())
+			phone = phone_obj.group() if phone_obj else ' '
+			mobile_obj = mobile_re.search(item['info'][1].strip())
+			mobile = mobile_obj.group() if mobile_obj else ' '
+			values = (item['company'][0],item['qq'][0],phone,mobile,item['info'][2].strip(),item['more'][0])
+			tx.execute("insert into company(company,qq,phone,mobile,address,more) values(%s,%s,%s,%s,%s,%s)", values)
+	def handle_error(self, e):
+		print 'error',e
+
