@@ -10,7 +10,6 @@ from json import dumps,loads
 import datetime
 import json
 
-
 class DateEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
@@ -71,6 +70,39 @@ def redisGet(key, param=[], json=True, write=True, expire=False):
 # expire:过期时间,不传则永久
 # 若空返回(),只能执行redis->get操作,无法执行pop之类操作
 def redisHget(key, field, param=[], json=True, write=True, expire=False):
+    def wrapper(func):
+        async def cache(*args, **kwargs):
+            if param:
+                for i,val in enumerate(param):
+                    if val.isdigit():
+                        param[i] = args[int(val)]
+                    else:
+                        if kwargs.get(val) is None:
+                            raise Exception('decorate param not exit,',val)
+                        param[i] = kwargs.get(val)
+                redis_key = key % tuple(param)
+            else :
+                redis_key = key
+
+            conn = Redis.conn()
+            res = conn.hget(redis_key, field)
+            if res:
+                if json:
+                    print('decrypt')
+                    res = loads(res)
+            else:
+                res = await func(*args, **kwargs)
+                if res and write:
+                    res = dumps(res, cls=DateEncoder)
+                    conn.hset(redis_key, field, res)
+                    if expire:
+                        conn.expire(redis_key, expire)
+            return res
+        return cache
+    return wrapper
+
+
+def redisHashObj(key, field, param=[], json=True, write=True, expire=False):
     def wrapper(func):
         async def cache(*args, **kwargs):
             if param:

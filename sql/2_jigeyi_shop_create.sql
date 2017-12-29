@@ -14,7 +14,7 @@ CREATE TABLE `shop` (
   `end_time` int(11) NOT NULL DEFAULT '0' COMMENT '合作结束时间',
   `mark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   `status` tinyint(1) DEFAULT NULL COMMENT '-1:删除,0-停用,1-启用',
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间',
+  `create_time` datetime NOT NULL DEFAULT '' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '' COMMENT '最近更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商店信息表'

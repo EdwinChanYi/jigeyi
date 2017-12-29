@@ -1,2 +1,3 @@
 from .BaseModel import *
-from .master.ShopModel import *
+from .UserModel import *
+from .ShopModel import *
