@@ -5,7 +5,8 @@ from voluptuous import *
 from common.Decorate import apiCounter,redisGet
 import time
 from json import loads,dumps
-from model import BaseModel
+from module.ShopModule import ShopModule
+from model.ShopModel import ShopModel
 
 from common import Db
 
@@ -13,18 +14,15 @@ class TestHandler(BaseHandler):
 
     def param_filter(self):
         return {
-            'GET': Schema({
-                Required('a'): str,
-                'page': str
-            })
         }
 
     async def get(self):
-        a = BaseModel.instance()
-        b = BaseModel.instance()
-        print(a == b)
-        a.setDefaultMod('hhh')
-        pass;
+        param = self.get_param()
+        host = param['host']
+        shop_module = ShopModule(ShopModel(await self.get_db_by_host()))
+        shop = await shop_module.findValidShopByHost(host)
+        self.success_ret(shop)
+
 
     # @redisGet('a', (), True, True)
     async def post(self, a='abc'):
