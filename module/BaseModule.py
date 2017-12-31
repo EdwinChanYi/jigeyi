@@ -2,8 +2,6 @@
 #-*- coding: utf-8 -*-
 # 模块基类，所有模块必须继承
 
-from common.Function import json_decode
-
 class BaseModule(object):
 
     __ins = None
@@ -17,7 +15,11 @@ class BaseModule(object):
 
 class BaseObj(object):
 
+    def __init__(self):
+        pass
+
     def __init__(self, row):
-        for i in row:
-            if hasattr(self, i):
-                setattr(self, i, row.get(i))
+        if row:
+            for i in row:
+                if hasattr(self, i):
+                    setattr(self, i, row.get(i))

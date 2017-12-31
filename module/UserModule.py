@@ -16,7 +16,6 @@ class UserModule(object):
         if not row:
             return User()
         user = User(row)
-        print(user)
         return user
 
 class User(BaseObj):
