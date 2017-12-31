@@ -17,8 +17,8 @@ if __name__ == "__main__":
          dict(autoreload=True, serve_traceback=True)),
     ], **settings)
     # app = make_app()
-    app.listen(8001)
+    app.listen(8000)
     Db.instance()       #初始化db连接池
     Redis.init()    #初始化redis连接池
-    print('app start on',8002)
+    print('app start on',8000)
     tornado.ioloop.IOLoop.current().start()
