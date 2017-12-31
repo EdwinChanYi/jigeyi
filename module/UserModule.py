@@ -3,16 +3,21 @@
 # 用户模块
 
 from module.BaseModule import BaseObj
+from model.UserModel import UserModel
+from common.Decorate import redisHashObj
+from conf.constant import REDIS_USER_ID
 
 class UserModule(object):
 
-    _user_model = None
+    _db = None
 
-    def __init__(self, user_model):
-        self._user_model = user_model
+    def __init__(self, db):
+        self._db = db
 
-    async def getUserInfo(self, id):
-        row = await self._user_model.findById(id)
+    # @redisHashObj(REDIS_USER_ID, ['nickname'], ['1'])
+    async def getUserInfo(self, db):
+        user_model = UserModel(db)
+        row = await user_model.findById(id)
         if not row:
             return User()
         user = User(row)
@@ -67,6 +72,9 @@ class User(BaseObj):
 
     # 最近更新时间,int
     undate_time = 0
+
+    def isValid(self):
+        return self.status == 1
 
     # def __init__(self, row):
     #     BaseObj.__init__(row)

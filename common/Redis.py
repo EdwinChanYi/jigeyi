@@ -20,7 +20,7 @@ class Redis(object):
                 password = config.get('password')
                 db = config.get('db')
                 port = config.get('port')
-                cls.__pool[key] = redis.ConnectionPool(host=host, password=password, db=db, port=port)
+                cls.__pool[key] = redis.ConnectionPool(host=host, password=password, db=db, port=port, decode_responses=True)
 
     @classmethod
     def get_pool(cls, mod='redis'):

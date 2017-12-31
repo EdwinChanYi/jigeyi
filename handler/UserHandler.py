@@ -32,7 +32,7 @@ class UserHandler(BaseHandler):
 
     async def get(self):
         param = self.get_param()
-        user_module = UserModule(UserModel(await self.get_db_by_host()))
+        user_module = UserModule(await self.get_db_by_host())
         row = await user_module.getUserInfo(param['id'])
         self.success_ret(row)
 

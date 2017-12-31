@@ -11,7 +11,7 @@ if __name__ == "__main__":
     app = tornado.web.Application([
         (r"/", TestHandler),
         (r"/test", TestHandler, None, '测试'),
-        # (r"/shop", ShopHandler, None, '商店'),
+        (r"/shop", ShopHandler, None, '商店'),
         (r"/user", UserHandler, None, '用户'),
         (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler,
          dict(autoreload=True, serve_traceback=True)),
