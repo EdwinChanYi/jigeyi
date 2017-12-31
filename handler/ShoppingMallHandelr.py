@@ -15,8 +15,9 @@ class ShoppingMallHandler(BaseHandler):
 		}
 	def get(self):
 		param = self.get_param()
-		shop = param.get('host')
-		if not self.adjust(shop):
+		shop_db = self.get_db_by_host()
+
+		if not shop_db:
 			return self.fail_ret(data={'para':'error'})
 
 	@classmethod
