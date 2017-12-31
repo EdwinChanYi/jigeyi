@@ -10,6 +10,7 @@ from conf import constant
 from common import Logger
 from model.ShopModel import *
 from module.BaseModule import BaseObj
+from common.Function import json_encode
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -84,6 +85,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def success_ret(self, data):
         if isinstance(data, BaseObj):
             data = data.__dict__
+            data = json_encode(data)
         ret = {'code': 200, 'msg': 'ok', 'data': data}
         self.finish(ret)
 
