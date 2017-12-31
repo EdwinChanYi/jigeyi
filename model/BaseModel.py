@@ -49,7 +49,7 @@ class BaseModel(object):
         conn.close()
         return res
 
-    async def all(self, sql, param, mod=None):
+    async def all(self, sql, param=(), mod=None):
         if mod is None and self.__db:
             mod = self.__db
         conn = self.getConn(mod)
