@@ -13,3 +13,5 @@ MYSQL_JIGEYI_DB = 'jigeyi'
 MYSQL_SHOPPING_MALL_MATERIAL_TABLE = 'material_kind_%s'
 MYSQL_SHOPPING_MALL_RECIPE_TABLE = 'recipe_%s'
 MYSQL_SHOP_TABLE = 'shop'
+MYSQL_SHOPPING_MALL_KIND_TABLE = 'material_kind_info'
+
