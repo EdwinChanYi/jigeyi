@@ -33,11 +33,3 @@ class TestHandler(BaseHandler):
         print(param)
         print(2)
         self.json_ret(200, 'ok')
-
-    @apiCounter(max=1000)
-    async def put(self):
-        param = self.get_param()
-        a = ShopModel()
-        # time.sleep(2)
-        res = await a.oneByHost(param.get('host'))
-        self.json_ret(res)

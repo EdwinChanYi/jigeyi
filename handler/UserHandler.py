@@ -5,6 +5,8 @@
 from handler import BaseHandler
 from model import UserModel
 from voluptuous import *
+from module import UserModule
+from common.Function import json_encode
 
 class UserHandler(BaseHandler):
 
@@ -30,9 +32,9 @@ class UserHandler(BaseHandler):
 
     async def get(self):
         param = self.get_param()
-        user_model = UserModel(await self.get_db_by_host())
-        row = await user_model.findById(param['id'])
-        self.success_ret(row)
+        user_module = UserModule(UserModel(await self.get_db_by_host()))
+        row = await user_module.getUserInfo(param['id'])
+        self.success_ret(row.__dict__)
 
     async def post(self):
         param = self.get_param()
