@@ -12,6 +12,4 @@ MYSQL_JIGEYI_DB = 'jigeyi'
 #商城数据库表名
 MYSQL_SHOPPING_MALL_MATERIAL_TABLE = 'material_kind_%s'
 MYSQL_SHOPPING_MALL_RECIPE_TABLE = 'recipe_%s'
-
-# 店家数据库表名
-SHOP_TABLE = 'shop'
+MYSQL_SHOP_TABLE = 'shop'
