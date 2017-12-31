@@ -20,5 +20,5 @@ if __name__ == "__main__":
     app.listen(8000)
     Db.instance()       #初始化db连接池
     Redis.init()    #初始化redis连接池
-    print('app start on',8000)
+    print('app start on',8008)
     tornado.ioloop.IOLoop.current().start()
