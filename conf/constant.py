@@ -7,3 +7,8 @@ bus_e = {
 
 # redis key
 REDIS_SHOP_DETAIL_HOST = 'shop_detail_host_%s'
+#mysql key
+MYSQL_JIGEYI_DB = 'jigeyi'
+#商城数据库表名
+MYSQL_SHOPPING_MALL_MATERIAL_TABLE = 'material_kind_%s'
+MYSQL_SHOPPING_MALL_RECIPE_TABLE = 'recipe_%s'
