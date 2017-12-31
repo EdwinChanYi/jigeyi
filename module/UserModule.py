@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 # 用户模块
 
+from module.BaseModule import BaseObj
 
 class UserModule(object):
 
@@ -14,9 +15,11 @@ class UserModule(object):
         row = await self._user_model.findById(id)
         if not row:
             return User()
-        return User(row)
+        user = User(row)
+        print(user)
+        return user
 
-class User(object):
+class User(BaseObj):
 
     # 自增id,即uid,int
     id = None
@@ -66,20 +69,23 @@ class User(object):
     # 最近更新时间,int
     undate_time = 0
 
-    def __init__(self, row):
-        self.id = row.get('id')
-        self.code = row.get('code')
-        self.password = row.get('password')
-        self.nickname = row.get('nickname')
-        self.age = row.get('age')
-        self.sex = row.get('sex')
-        self.register_time = row.get('register_time')
-        self.email = row.get('email')
-        self.phone = row.get('phone')
-        self.open_id = row.get('open_id')
-        self.union_id = row.get('union_id')
-        self.province = row.get('province')
-        self.city = row.get('city')
-        self.status = row.get('status')
-        self.create_time = row.get('create_time')
-        self.update_time = row.get('update_time')
+    # def __init__(self, row):
+    #     BaseObj.__init__(row)
+
+    # def __init__(self, row):
+    #     self.id = row.get('id')
+    #     self.code = row.get('code')
+    #     self.password = row.get('password')
+    #     self.nickname = row.get('nickname')
+    #     self.age = row.get('age')
+    #     self.sex = row.get('sex')
+    #     self.register_time = row.get('register_time')
+    #     self.email = row.get('email')
+    #     self.phone = row.get('phone')
+    #     self.open_id = row.get('open_id')
+    #     self.union_id = row.get('union_id')
+    #     self.province = row.get('province')
+    #     self.city = row.get('city')
+    #     self.status = row.get('status')
+    #     self.create_time = row.get('create_time')
+    #     self.update_time = row.get('update_time')

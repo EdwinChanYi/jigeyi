@@ -8,5 +8,6 @@ from model.ShopModel import *
 class ShopModule(BaseModule):
 
     async def findShopByHost(self, host):
-        shop = Shop.instance()
-        return await shop.findByHost(host)
+        pass;
+        # shop = Shop.instance()
+        # return await shop.findByHost(host)

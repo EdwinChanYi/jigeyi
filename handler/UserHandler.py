@@ -34,7 +34,7 @@ class UserHandler(BaseHandler):
         param = self.get_param()
         user_module = UserModule(UserModel(await self.get_db_by_host()))
         row = await user_module.getUserInfo(param['id'])
-        self.success_ret(row.__dict__)
+        self.success_ret(row)
 
     async def post(self):
         param = self.get_param()

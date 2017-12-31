@@ -9,7 +9,7 @@ sys.path.append('../')
 from conf import constant
 from common import Logger
 from model.ShopModel import *
-from model.UserModel import *
+from module.BaseModule import BaseObj
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -82,6 +82,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
     # 成功返回
     def success_ret(self, data):
+        if isinstance(data, BaseObj):
+            data = data.__dict__
         ret = {'code': 200, 'msg': 'ok', 'data': data}
         self.finish(ret)
 

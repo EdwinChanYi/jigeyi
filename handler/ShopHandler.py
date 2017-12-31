@@ -8,9 +8,10 @@ from module import ShopModule
 class ShopHandler(BaseHandler):
 
     async def get(self):
-        param = self.get_param()
-        host = param.get('host')
-        shop_module = ShopModule.instance()
-        res = await shop_module.findShopByHost(host)
-        self.success_ret(res)
+        pass
+        # param = self.get_param()
+        # host = param.get('host')
+        # shop_module = ShopModule.instance()
+        # res = await shop_module.findShopByHost(host)
+        # self.success_ret(res)
 
