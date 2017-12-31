@@ -21,8 +21,3 @@ class BaseObj(object):
         for i in row:
             if hasattr(self, i):
                 setattr(self, i, row.get(i))
-
-    def init(self, row):
-        for i in row:
-            if hasattr(self, i):
-                setattr(self, i, row.get(i))
