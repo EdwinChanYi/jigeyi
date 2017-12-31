@@ -7,6 +7,7 @@ import time
 from json import loads,dumps
 from module.ShopModule import ShopModule
 from model.ShopModel import ShopModel
+from model.UserModel import UserModel
 
 from common import Db
 
@@ -23,11 +24,9 @@ class TestHandler(BaseHandler):
         shop = await shop_module.findValidShopByHost(host)
         self.success_ret(shop)
 
-
     # @redisGet('a', (), True, True)
     async def post(self, a='abc'):
-        print(1)
-        param = self.get_param()
-        print(param)
-        print(2)
-        self.json_ret(200, 'ok')
+        model = ShopModel(await self.get_db_by_host())
+        res = await model.all('select id from user')
+        self.success_ret(res)
+
