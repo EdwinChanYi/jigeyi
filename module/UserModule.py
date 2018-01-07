@@ -4,12 +4,9 @@
 
 from module.BaseModule import BaseModule,BaseObj
 from model.UserModel import UserModel
-from common.Decorate import redisHashObj
-from conf.constant import REDIS_USER_ID
 
 class UserModule(BaseModule):
 
-    # @redisHashObj(REDIS_USER_ID, ['nickname'], ['1'])
     async def getUserInfo(self, id):
         user_model = UserModel(self._db)
         row = await user_model.findById(id)
@@ -78,24 +75,3 @@ class User(BaseObj):
 
     def isValid(self):
         return self.status == 1
-
-    # def __init__(self, row):
-    #     BaseObj.__init__(row)
-
-    # def __init__(self, row):
-    #     self.id = row.get('id')
-    #     self.code = row.get('code')
-    #     self.password = row.get('password')
-    #     self.nickname = row.get('nickname')
-    #     self.age = row.get('age')
-    #     self.sex = row.get('sex')
-    #     self.register_time = row.get('register_time')
-    #     self.email = row.get('email')
-    #     self.phone = row.get('phone')
-    #     self.open_id = row.get('open_id')
-    #     self.union_id = row.get('union_id')
-    #     self.province = row.get('province')
-    #     self.city = row.get('city')
-    #     self.status = row.get('status')
-    #     self.create_time = row.get('create_time')
-    #     self.update_time = row.get('update_time')

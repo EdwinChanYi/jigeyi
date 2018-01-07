@@ -4,16 +4,12 @@
 
 from handler import BaseHandler
 from module import ShopModule
+from common.Decorate import auth
 
 class ShopHandler(BaseHandler):
 
     # 测试商店权限
+    @auth(ShopModule.AUTH_MENU)
     async def get(self, id):
-        shop = self._shop
-        shop_module = ShopModule()
-        is_auth = shop_module.isAuth(shop, ShopModule.AUTH_MENU)
-        if is_auth:
-            self.success_ret()
-        else:
-            self.fail_ret()
+        self.success_ret(id)
 
