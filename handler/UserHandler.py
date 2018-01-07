@@ -10,8 +10,6 @@ from common.Function import json_encode
 
 class UserHandler(BaseHandler):
 
-    _init_shop = False
-
     def param_filter(self):
         return {
             'get' : Schema({
