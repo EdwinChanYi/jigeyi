@@ -2,7 +2,7 @@ db_config = {
     'jigeyi' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'jigeyi',
         'port'      : 3306,
         'charset'   : 'utf8',
@@ -12,7 +12,7 @@ db_config = {
     'clw' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'clw',
         'port'      : 3306,
         'charset'   : 'utf8',

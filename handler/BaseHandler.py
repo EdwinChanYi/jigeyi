@@ -11,7 +11,7 @@ from common import Logger
 from model.ShopModel import *
 from module.BaseModule import BaseObj
 from common.Function import json_encode
-
+from module.ShopModule import *
 class BaseHandler(tornado.web.RequestHandler):
 
     __param = None
@@ -44,7 +44,7 @@ class BaseHandler(tornado.web.RequestHandler):
             schema = self.param_filter().get(self.request.method)
             if schema is not None:
                 try:
-                    schema(param)
+                    print("get parm",schema.validate(param))
                 except MultipleInvalid as e:
                     self.fail_ret(201, str(e))
             self.__param = param
@@ -130,7 +130,8 @@ class BaseHandler(tornado.web.RequestHandler):
         else:
             self.json_ret(500, 'no correct db choose')
 
-    # async def current_user(self):
+
+                    # async def current_user(self):
     #     user_model = UserModel(await self.get_db_by_host())
     #     return await user_model.findById(self.get_current_user())
 

@@ -44,22 +44,24 @@ class Recipe(BaseObj):
     #数据状态
     status = 0
 class ShoppingMallModule(BaseModule):
-    def __init__(self, shop_db):
-        __shop_db = shop_db
+
+    def __init__(self, shop_db, shop_code):
+        self.__shop_db = shop_db
+        self.__shop_code = shop_code
+
     #根据店铺获取店铺食材类型
-    async def getKindsByShop(self,host, begin, limit):
-        shop_info = await ShopModule.findShopByHost(host)
-        shopping_mall = ShoppingMallModel()
-        shop_kinds = await shopping_mall.findMaterialKindsByCode(shop_info.code, begin, limit)
+    async def getKindsByShop(self, begin, limit):
+        shopping_mall = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shop_kinds = await shopping_mall.findMaterialKindsByCode(begin, limit)
         common_kinds = []
         [common_kinds.append(shop_kind.get('kind_id')) for shop_kind in shop_kinds]
         kinds_info = await shopping_mall.findKindsInfoByKindId(common_kinds)
         return kinds_info
+
     #根据店铺和食材类型获取食材列表
-    async def getMaterialsByShopAndKind(self, host, kind_id, begin, limit):
-        shopping_mall = ShoppingMallModel()
-        shop_info = await ShopModule.findShopByHost(host)
-        shop_material_rows = await shopping_mall.findMaterialsByCodeAndMaterialKind(shop_info.code,kind_id, begin, limit)
+    async def getMaterialsByShopAndKind(self, kind_id, begin, limit):
+        shopping_mall = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shop_material_rows = await shopping_mall.findMaterialsByCodeAndMaterialKind(kind_id, begin, limit)
         for show_mateial_row in shop_material_rows:
             shop_material = Material(show_mateial_row)
 
