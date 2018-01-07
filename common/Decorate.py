@@ -176,3 +176,21 @@ def apiCounter(max=0, file='api_timer.log'):
         return count
     return wrapper
 
+# 权限检查装饰器,使用在handler层,auth_name来自shopModule
+def auth(auth_name):
+    def wrapper(func):
+        async def cache(*args, **kwargs):
+            shop = args[0]._shop
+            if not shop:
+                raise Exception('shop not exit')
+            auth = shop.get('auth')
+            print(auth)
+            if not auth:
+                raise Exception('shop has no auth')
+            auth = json_decode(auth)
+            if auth.get(auth_name) != 1:
+                raise Exception('shop has no auth')
+            res = await func(*args, **kwargs)
+            return res
+        return cache
+    return wrapper

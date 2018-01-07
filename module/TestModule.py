@@ -4,7 +4,7 @@
 
 from module import BaseModule
 from model import UserModel
-from common.Decorate import redisGet,redisHget,redisHashObj
+from common.Decorate import redisHget
 
 class TestModule(BaseModule):
 

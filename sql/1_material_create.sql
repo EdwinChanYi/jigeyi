@@ -1,3 +1,4 @@
+
 CREATE TABLE `material_kind_1234` (
   `material_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '食材id',
   `kind_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '食材类id',
