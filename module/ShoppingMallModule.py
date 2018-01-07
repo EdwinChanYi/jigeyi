@@ -56,7 +56,7 @@ class ShoppingMallModule(BaseModule):
         shop_kinds = await shopping_mall.findMaterialKindsByCode(begin, limit)
         print(shop_kinds)
         common_kinds = []
-        [common_kinds.append(shop_kind.get('kind_id')) for shop_kind in shop_kinds]
+        [common_kinds.append(str(shop_kind.get('kind_id'))) for shop_kind in shop_kinds]
         print(common_kinds)
         if common_kinds:
             kinds_info = await shopping_mall.findKindsInfoByKindId(common_kinds)
@@ -67,6 +67,5 @@ class ShoppingMallModule(BaseModule):
     async def getMaterialsByShopAndKind(self, kind_id, begin, limit):
         shopping_mall = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
         shop_material_rows = await shopping_mall.findMaterialsByCodeAndMaterialKind(kind_id, begin, limit)
-        for show_mateial_row in shop_material_rows:
-            shop_material = Material(show_mateial_row)
+        return shop_material_rows
 
