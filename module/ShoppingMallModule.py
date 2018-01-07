@@ -45,6 +45,7 @@ class Recipe(BaseObj):
     status = 0
 class ShoppingMallModule(BaseModule):
 
+
     def __init__(self, shop_db, shop_code):
         self.__shop_db = shop_db
         self.__shop_code = shop_code

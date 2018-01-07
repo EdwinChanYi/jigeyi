@@ -6,6 +6,7 @@ from conf import constant
 import sys
 class ShoppingMallModel(BaseModel):
 
+
     __material_table = constant.MYSQL_SHOPPING_MALL_MATERIAL_TABLE #商城食材表
     __recipe_table = constant.MYSQL_SHOPPING_MALL_RECIPE_TABLE#商城食谱表
     __kind_table = constant.MYSQL_SHOPPING_MALL_KIND_TABLE#商城食材类型表
@@ -31,6 +32,7 @@ class ShoppingMallModel(BaseModel):
               ' WHERE kind_id = %d limit %d,%d'
         rows = await self.all(sql, (kind_id, begin, limit), self.__shop_db)
         return rows
+
 
     async def findKindsInfoByKindId(self, kinds):
         sql = 'SELECT kind_id,kind_name,image FROM '+self.__kind_table+' kind_id IN('+",".join(kinds)+')'

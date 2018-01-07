@@ -40,6 +40,7 @@ class ShoppingMallMaterialsHandler(BaseHandler):
 				Required('type'): int,
 			}),
 		}
+      
     def get(self):
         param = self.get_param()
         shop_db = self.get_db_by_host()
@@ -69,3 +70,4 @@ class ShoppingMallHandler(BaseHandler):
     @classmethod
     def adjust(self, host):
         return False
+

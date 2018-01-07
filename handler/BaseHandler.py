@@ -11,14 +11,14 @@ from common import Logger
 from model.ShopModel import *
 from module.BaseModule import BaseObj
 from common.Function import json_encode
-from module.ShopModule import *
+
 class BaseHandler(tornado.web.RequestHandler):
 
     __param = None
 
     # 是否获取商店信息
     _init_shop = True
-
+    
     # 根据域名获取的商店信息
     _shop = None
 
@@ -70,7 +70,6 @@ class BaseHandler(tornado.web.RequestHandler):
         msg = "start:uid[%s],method[%s],remote_ip[%s],uri[%s],param[%s]" % (uid, method, remote_ip, uri, params)
         log = Logger.get_log('main.log', True)
         log.info(msg)
-        print("prepare host:%s"%self.request.host)
         # 初始化商店信息
         if self._init_shop:
             shop_model = ShopModel()

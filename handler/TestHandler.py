@@ -9,6 +9,8 @@ from module.ShopModule import ShopModule
 from model.ShopModel import ShopModel
 from model.UserModel import UserModel
 
+from module.TestModule import TestModule
+
 from common import Db
 
 class TestHandler(BaseHandler):
@@ -18,13 +20,8 @@ class TestHandler(BaseHandler):
         }
 
     async def get(self):
-    #    test_module = TestModule(await self.get_db_by_host())
-    #    res = await test_module.getUserInfo(1)
-    #   self.success_ret(res)
-        pass
-    # @redisGet('a', (), True, True)
-    async def post(self, a='abc'):
-        model = ShopModel(await self.get_db_by_host())
-        res = await model.all('select id from user')
+        db = self._shop.get('db')
+        test_module = TestModule(db)
+        res = await test_module.getUserInfo(1)
         self.success_ret(res)
 
