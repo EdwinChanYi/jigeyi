@@ -16,18 +16,18 @@ class BaseHandler(tornado.web.RequestHandler):
 
     __param = None
 
-    __instance = {}
-
     # 是否获取商店信息
     _init_shop = True
 
     # 根据域名获取的商店信息
     _shop = None
 
-    def __call__(self, *args, **kw):
-        if self not in self.__instance:
-            self.__instance[self] = super(BaseHandler, self).__call__(*args, **kw)
-        return self.__instance[self]
+    # __instance = {}
+    #
+    # def __call__(self, *args, **kw):
+    #     if self not in self.__instance:
+    #         self.__instance[self] = super(BaseHandler, self).__call__(*args, **kw)
+    #     return self.__instance[self]
 
     # 参数过滤器
     # @https://pypi.python.org/pypi/voluptuous/0.10.5
@@ -120,7 +120,7 @@ class BaseHandler(tornado.web.RequestHandler):
         else:
             self.json_ret(500, 'undefined err')
 
-    # 用过域名获取db，失败抛出异常
+    # 用过域名获取db，失败抛出异常,已弃用
     async def get_db_by_host(self):
         host = self.request.host
         shop_model = ShopModel()
