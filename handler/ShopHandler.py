@@ -7,11 +7,13 @@ from module import ShopModule
 
 class ShopHandler(BaseHandler):
 
-    async def get(self):
-        pass
-        # param = self.get_param()
-        # host = param.get('host')
-        # shop_module = ShopModule.instance()
-        # res = await shop_module.findShopByHost(host)
-        # self.success_ret(res)
+    # 测试商店权限
+    async def get(self, id):
+        shop = self._shop
+        shop_module = ShopModule()
+        is_auth = shop_module.isAuth(shop, ShopModule.AUTH_MENU)
+        if is_auth:
+            self.success_ret()
+        else:
+            self.fail_ret()
 

@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 import sys
-from binascii import b2a_hex, a2b_hex
+import json
 
 if __name__ == '__main__':
-    print('123')
+    a = {
+        'AUTH_MENU' : 1
+    }
+    b = json.dumps(a)
+    print(b)
+
 
