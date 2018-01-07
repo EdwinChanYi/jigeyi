@@ -6,6 +6,11 @@ class BaseModule(object):
 
     __ins = None
 
+    _db = None
+
+    def __init__(self, db):
+        self._db = db
+
     @classmethod
     def instance(cls):
         if cls.__ins is None:
