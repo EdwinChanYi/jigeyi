@@ -2,17 +2,12 @@
 #-*- coding: utf-8 -*-
 # 用户模块
 
-from module.BaseModule import BaseObj
+from module.BaseModule import BaseModule,BaseObj
 from model.UserModel import UserModel
 from common.Decorate import redisHashObj
 from conf.constant import REDIS_USER_ID
 
-class UserModule(object):
-
-    _db = None
-
-    def __init__(self, db):
-        self._db = db
+class UserModule(BaseModule):
 
     # @redisHashObj(REDIS_USER_ID, ['nickname'], ['1'])
     async def getUserInfo(self, id):
@@ -22,6 +17,14 @@ class UserModule(object):
             return User()
         user = User(row)
         return user
+
+    async def updateUserInfo(self, id, nickname):
+        user_model = UserModel(self._db)
+        ret = await user_model.updateUserNickname(id, nickname)
+        if ret > 0:
+            return True
+        else:
+            return False
 
 class User(BaseObj):
 

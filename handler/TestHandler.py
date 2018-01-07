@@ -8,6 +8,7 @@ from json import loads,dumps
 from module.ShopModule import ShopModule
 from model.ShopModel import ShopModel
 from model.UserModel import UserModel
+from module.TestModule import TestModule
 
 from common import Db
 
@@ -18,11 +19,9 @@ class TestHandler(BaseHandler):
         }
 
     async def get(self):
-        param = self.get_param()
-        host = param['host']
-        shop_module = ShopModule(ShopModel(await self.get_db_by_host()))
-        shop = await shop_module.findValidShopByHost(host)
-        self.success_ret(shop)
+        test_module = TestModule(await self.get_db_by_host())
+        res = await test_module.getUserInfo(1)
+        self.success_ret(res)
 
     # @redisGet('a', (), True, True)
     async def post(self, a='abc'):
