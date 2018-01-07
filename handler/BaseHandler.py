@@ -70,6 +70,7 @@ class BaseHandler(tornado.web.RequestHandler):
         msg = "start:uid[%s],method[%s],remote_ip[%s],uri[%s],param[%s]" % (uid, method, remote_ip, uri, params)
         log = Logger.get_log('main.log', True)
         log.info(msg)
+        print("prepare host:%s"%self.request.host)
         # 初始化商店信息
         if self._init_shop:
             shop_model = ShopModel()

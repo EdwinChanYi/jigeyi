@@ -53,10 +53,14 @@ class ShoppingMallModule(BaseModule):
     async def getKindsByShop(self, begin, limit):
         shopping_mall = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
         shop_kinds = await shopping_mall.findMaterialKindsByCode(begin, limit)
+        print(shop_kinds)
         common_kinds = []
         [common_kinds.append(shop_kind.get('kind_id')) for shop_kind in shop_kinds]
-        kinds_info = await shopping_mall.findKindsInfoByKindId(common_kinds)
-        return kinds_info
+        print(common_kinds)
+        if common_kinds:
+            kinds_info = await shopping_mall.findKindsInfoByKindId(common_kinds)
+            return kinds_info
+
 
     #根据店铺和食材类型获取食材列表
     async def getMaterialsByShopAndKind(self, kind_id, begin, limit):

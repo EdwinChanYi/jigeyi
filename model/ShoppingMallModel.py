@@ -13,11 +13,15 @@ class ShoppingMallModel(BaseModel):
     def __init__(self, db, code):
         self.__shop_db = db #店铺数据库
         self.__shop_code = code
-        BaseModel.__init__(constant.MYSQL_JIGEYI_DB)
+        self.__db = constant.MYSQL_JIGEYI_DB
     #获取食材类
     async def findMaterialKindsByCode(self, begin, limit):
-        sql = 'SELECT kind_id FROM '+self.__material_table%self.__shop_code+' GROUP BY kind_id limit %d,%d'
-        rows = await self.all(sql, (begin, limit),self.__db)
+        sql = 'SELECT kind_id FROM '+(self.__material_table%self.__shop_code)\
+              +' GROUP BY kind_id limit '+str(begin)+','+str(limit)
+
+        print(self.__shop_db,sql)
+
+        rows = await self.all(sql, (),self.__shop_db)
         return rows
 
     async def findMaterialsByCodeAndMaterialKind(self, kind_id, begin, limit):
@@ -30,5 +34,6 @@ class ShoppingMallModel(BaseModel):
 
     async def findKindsInfoByKindId(self, kinds):
         sql = 'SELECT kind_id,kind_name,image FROM '+self.__kind_table+' kind_id IN('+",".join(kinds)+')'
+        print(sql)
         rows = await self.all(sql, self.__db)
         return rows

@@ -11,23 +11,27 @@ class ShoppingMallMaterialKindsHandler(BaseHandler):
     def param_filter(self):
         return {
 			    'get': Schema({
-		        Required('kindId'): int,
-		        Required('type'): int,
+		        Required('begin'): int,
+                Required('limit'): int,
 		        }),
         }
 
     async def get(self):
         print("shoppingMallMaterialKinds")
         param = self.get_param()
-        shop_info = await self.get_db_by_host()
-        print(param, shop_info)
-        if not shop_info:
+        print(param, self._shop)
+        if not self._shop:
             return self.fail_ret(data={'para':'error'})
-        shopping_mall_module = ShoppingMallModule.ShoppingMallModule(shop_info,'1234')
-        begin = 0
-        limit = 50
+        shop_code = self._shop.get('code')
+        shop_db = self._shop.get('db')
+        shopping_mall_module = ShoppingMallModule.ShoppingMallModule(shop_db,shop_code)
+        begin = param.get('begin')
+        limit = param.get('limit')
+        if begin is None or limit is None:
+            begin = 0
+            limit = 50
+        return await shopping_mall_module.getKindsByShop(begin, limit)
 
-        shopping_mall_module.getKindsByShop()
 class ShoppingMallMaterialsHandler(BaseHandler):
     def param_filter(self):
         return {

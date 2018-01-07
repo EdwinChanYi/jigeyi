@@ -13,4 +13,5 @@ route = [
     # 用户
     (r"/users", UserHandler, None, '新增用户，上线屏蔽'),
     (r"/users/([0-9]+)", UserHandler, None, '删改查用户'),
+    (r"/shoppingmallKinds", ShoppingMallHandelr.ShoppingMallMaterialKindsHandler, None, '商城列表'),
 ]
