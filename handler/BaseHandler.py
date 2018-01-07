@@ -18,6 +18,12 @@ class BaseHandler(tornado.web.RequestHandler):
 
     __instance = {}
 
+    # 是否获取商店信息
+    _init_shop = True
+
+    # 根据域名获取的商店信息
+    _shop = None
+
     def __call__(self, *args, **kw):
         if self not in self.__instance:
             self.__instance[self] = super(BaseHandler, self).__call__(*args, **kw)
@@ -64,6 +70,10 @@ class BaseHandler(tornado.web.RequestHandler):
         msg = "start:uid[%s],method[%s],remote_ip[%s],uri[%s],param[%s]" % (uid, method, remote_ip, uri, params)
         log = Logger.get_log('main.log', True)
         log.info(msg)
+        # 初始化商店信息
+        if self._init_shop:
+            shop_model = ShopModel()
+            self._shop = await shop_model.findByHost(host=self.request.host)
 
     # 清理和日志
     def on_finish(self):
