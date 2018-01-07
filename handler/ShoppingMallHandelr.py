@@ -43,14 +43,21 @@ class ShoppingMallMaterialsHandler(BaseHandler):
       
     def get(self):
         param = self.get_param()
-        shop_db = self.get_db_by_host()
-
-        if not shop_db:
+        print(param, self._shop)
+        if not self._shop:
             return self.fail_ret(data={'para':'error'})
-
-    @classmethod
-    def adjust(self, host):
-        return False
+        shop_code = self._shop.get('code')
+        shop_db = self._shop.get('db')
+        if not shop_db or not shop_code:
+            return self.fail_ret(data={'para':'error'})
+        shopping_mall_module = ShoppingMallModule.ShoppingMallModule(shop_db,shop_code)
+        begin = param.get('begin')
+        limit = param.get('limit')
+        kind_id = param.get('kindId')
+        if not begin or not limit:
+            begin = 0
+            limit = 50
+        shopping_mall_module.getMaterialsByShopAndKind(kind_id,begin,limit)
 
 class ShoppingMallHandler(BaseHandler):
     def param_filter(self):

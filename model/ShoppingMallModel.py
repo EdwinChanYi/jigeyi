@@ -35,7 +35,7 @@ class ShoppingMallModel(BaseModel):
 
 
     async def findKindsInfoByKindId(self, kinds):
-        sql = 'SELECT kind_id,kind_name,image FROM '+self.__kind_table+' kind_id IN('+",".join(kinds)+')'
-        print(sql)
-        rows = await self.all(sql, self.__db)
+        sql = 'SELECT kind_id,kind_name,image FROM '+self.__kind_table+' WHERE kind_id IN('+",".join(kinds)+')'
+        print(sql,self.__db)
+        rows = await self.all(sql, (),self.__db)
         return rows
