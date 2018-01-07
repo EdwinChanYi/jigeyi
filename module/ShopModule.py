@@ -3,24 +3,21 @@
 # 商店模块
 
 from module import BaseModule,BaseObj
-from model.ShopModel import *
+from model.ShopModel import ShopModel
 
 class ShopModule(BaseModule):
 
-    _shop_model = None
-
-    def __init__(self, shop_model):
-        self._shop_model = shop_model
-
     # 根据域名获取商店
     async def findShopByHost(self, host):
-        row = await self._shop_model.findByHost(host)
+        shop_model = ShopModel()
+        row = await shop_model.findByHost(host)
         shop = Shop(row)
         return shop
 
     # 根据域名获取有效的商店
     async def findValidShopByHost(self, host):
-        row = await self._shop_model.findValidByHost(host)
+        shop_model = ShopModel()
+        row = await shop_model.findValidByHost(host)
         shop = Shop(row)
         return shop
 

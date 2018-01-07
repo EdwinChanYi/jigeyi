@@ -92,7 +92,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.finish(ret)
 
     # 成功返回
-    def success_ret(self, data):
+    def success_ret(self, data=''):
         if isinstance(data, BaseObj):
             data = data.__dict__
             data = json_encode(data)
