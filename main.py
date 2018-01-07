@@ -9,18 +9,10 @@ if __name__ == "__main__":
         'debug': True,
         "cookie_secret": "__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
     }
+    app = tornado.web.Application(route, **settings)
 
-    app = tornado.web.Application([
-        (r"/", TestHandler),
-        (r"/test", TestHandler, None, '测试'),
-        (r"/shop/", ShopHandler, None, '商店'),
-        (r"/user", UserHandler, None, '用户'),
-        (r'/shoppingMallMaterialKinds', ShoppingMallMaterialKindsHandler, None, '食材类'),
-        (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler,
-         dict(autoreload=True, serve_traceback=True)),
-    ], **settings)
     # app = make_app()
-    app.listen(8008)
+    app.listen(8000)
     Db.instance()       #初始化db连接池
     Redis.init()    #初始化redis连接池
     print('app start on',8000)
