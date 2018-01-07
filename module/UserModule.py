@@ -15,8 +15,8 @@ class UserModule(object):
         self._db = db
 
     # @redisHashObj(REDIS_USER_ID, ['nickname'], ['1'])
-    async def getUserInfo(self, db):
-        user_model = UserModel(db)
+    async def getUserInfo(self, id):
+        user_model = UserModel(self._db)
         row = await user_model.findById(id)
         if not row:
             return User()
