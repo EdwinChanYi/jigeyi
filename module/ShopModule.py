@@ -25,6 +25,7 @@ class ShopModule(BaseModule):
         shop = Shop(row)
         return shop
 
+
     # 判断商店是否有权限
     def isAuth(self, shop, auth_name):
         auth = shop.get('auth')
@@ -35,7 +36,6 @@ class ShopModule(BaseModule):
             return True
         else:
             return False
-
 class Shop(BaseObj):
 
     # 自增id,int
@@ -71,9 +71,9 @@ class Shop(BaseObj):
     # 域名,string
     host = None
 
+
     # 权限,string
     auth = None
-
     # 合作开始时间，即有效开始时间,int
     start_time = 0
 

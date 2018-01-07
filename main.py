@@ -10,6 +10,7 @@ if __name__ == "__main__":
         "cookie_secret": "__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
     }
     app = tornado.web.Application(route, **settings)
+
     # app = make_app()
     app.listen(8000)
     Db.instance()       #初始化db连接池

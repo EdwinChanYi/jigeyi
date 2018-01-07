@@ -18,7 +18,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     # 是否获取商店信息
     _init_shop = True
-
+    
     # 根据域名获取的商店信息
     _shop = None
 
@@ -44,7 +44,7 @@ class BaseHandler(tornado.web.RequestHandler):
             schema = self.param_filter().get(self.request.method)
             if schema is not None:
                 try:
-                    schema(param)
+                    print("get parm",schema.validate(param))
                 except MultipleInvalid as e:
                     self.fail_ret(201, str(e))
             self.__param = param
@@ -130,7 +130,8 @@ class BaseHandler(tornado.web.RequestHandler):
         else:
             self.json_ret(500, 'no correct db choose')
 
-    # async def current_user(self):
+
+                    # async def current_user(self):
     #     user_model = UserModel(await self.get_db_by_host())
     #     return await user_model.findById(self.get_current_user())
 

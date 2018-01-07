@@ -2,7 +2,7 @@ db_config = {
     'jigeyi' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'jigeyi',
         'port'      : 3306,
         'charset'   : 'utf8',
@@ -12,8 +12,17 @@ db_config = {
     'clw' : {
         'host'      : 'localhost',
         'user'      : 'root',
-        'password'  : 'root',
+        'password'  : '123456',
         'db'        : 'clw',
+        'port'      : 3306,
+        'charset'   : 'utf8',
+        'num'       : 5 #连接池连接数
+    },
+    'shop_1234' : {
+        'host'      : 'localhost',
+        'user'      : 'root',
+        'password'  : '123456',
+        'db'        : 'shop_1234',
         'port'      : 3306,
         'charset'   : 'utf8',
         'num'       : 5 #连接池连接数

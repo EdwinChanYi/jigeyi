@@ -8,6 +8,7 @@ class BaseModule(object):
 
     _db = None
 
+
     def __init__(self, db=None):
         self._db = db
 

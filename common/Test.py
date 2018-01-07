@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 import sys
+
 import json
 
 if __name__ == '__main__':
@@ -9,5 +10,4 @@ if __name__ == '__main__':
     }
     b = json.dumps(a)
     print(b)
-
 
