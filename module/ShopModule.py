@@ -4,7 +4,6 @@
 
 from module import BaseModule,BaseObj
 from model.ShopModel import ShopModel
-from common.Function import json_decode
 
 class ShopModule(BaseModule):
 
@@ -25,17 +24,6 @@ class ShopModule(BaseModule):
         shop = Shop(row)
         return shop
 
-
-    # 判断商店是否有权限
-    def isAuth(self, shop, auth_name):
-        auth = shop.get('auth')
-        if not auth:
-            return False
-        auth = json_decode(auth)
-        if auth.get(auth_name) == 1:
-            return True
-        else:
-            return False
 class Shop(BaseObj):
 
     # 自增id,int
