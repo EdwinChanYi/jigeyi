@@ -19,13 +19,8 @@ class TestHandler(BaseHandler):
         }
 
     async def get(self):
-        test_module = TestModule(await self.get_db_by_host())
+        db = self._shop.get('db')
+        test_module = TestModule(db)
         res = await test_module.getUserInfo(1)
-        self.success_ret(res)
-
-    # @redisGet('a', (), True, True)
-    async def post(self, a='abc'):
-        model = ShopModel(await self.get_db_by_host())
-        res = await model.all('select id from user')
         self.success_ret(res)
 
