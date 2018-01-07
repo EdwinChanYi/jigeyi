@@ -10,6 +10,8 @@ from common.Function import json_encode
 
 class UserHandler(BaseHandler):
 
+    _init_shop = False
+
     def param_filter(self):
         return {
             'get' : Schema({
@@ -30,10 +32,11 @@ class UserHandler(BaseHandler):
             }),
         }
 
-    async def get(self):
+    async def get(self, id):
         param = self.get_param()
-        user_module = UserModule(await self.get_db_by_host())
-        row = await user_module.getUserInfo(param['id'])
+        db = self._shop.get('db')
+        user_module = UserModule(db)
+        row = await user_module.getUserInfo(id)
         self.success_ret(row)
 
     async def post(self):

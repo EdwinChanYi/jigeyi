@@ -5,7 +5,6 @@
 from common import Redis
 import time
 from common.Log import Logger
-from json import dumps,loads
 from common.Function import json_encode,json_decode
 
 import datetime
@@ -28,6 +27,7 @@ class DateEncoder(json.JSONEncoder):
 # write:若redis不存在,是否写回redis
 # expire:过期时间,不传则永久
 # 若空返回(),只能执行redis->get操作,无法执行pop之类操作
+# 例：@redisGet('a_%s', ['1'], True, True, 3600)
 def redisGet(key, param=[], json=True, write=True, expire=False):
     def wrapper(func):
         async def cache(*args, **kwargs):
@@ -54,7 +54,7 @@ def redisGet(key, param=[], json=True, write=True, expire=False):
                 if res and write:
                     redis_val = res
                     if json:
-                        redis_val = json_encode(res, cls=DateEncoder)
+                        redis_val = json_encode(res)
                     conn.set(redis_key, redis_val)
                     if expire:
                         conn.expire(redis_key, expire)
@@ -70,6 +70,7 @@ def redisGet(key, param=[], json=True, write=True, expire=False):
 # write:若redis不存在,是否写回redis
 # expire:过期时间,不传则永久
 # 若空返回(),只能执行redis->get操作,无法执行pop之类操作
+# 例:@redisHget('a_%s', 'b', ['1'], True, True, 3600)
 def redisHget(key, field, param=[], json=True, write=True, expire=False):
     def wrapper(func):
         async def cache(*args, **kwargs):
@@ -90,12 +91,14 @@ def redisHget(key, field, param=[], json=True, write=True, expire=False):
             res = conn.hget(redis_key, field)
             if res:
                 if json:
-                    res = loads(res)
+                    res = json_decode(res)
             else:
                 res = await func(*args, **kwargs)
                 if res and write:
-                    res = dumps(res, cls=DateEncoder)
-                    conn.hset(redis_key, field, res)
+                    redis_val = res
+                    if json:
+                        redis_val = json_encode(res)
+                    conn.hset(redis_key, field, redis_val)
                     if expire:
                         conn.expire(redis_key, expire)
             return res
@@ -109,6 +112,7 @@ def redisHget(key, field, param=[], json=True, write=True, expire=False):
 # write:若redis不存在,是否写回redis
 # expire:过期时间,不传则永久
 # 将对象进行hash存储,若空返回{},包装的db方法必须返回对象,只有需要的所有属性都存在于redis的时候才会不走db
+# 例:@redisHashObj('a_%s', ['b'], ['1'], True, 3600)
 def redisHashObj(key, field=[], param=[], write=True, expire=False):
     def wrapper(func):
         async def cache(*args, **kwargs):
