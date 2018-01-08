@@ -30,7 +30,8 @@ class ShoppingMallMaterialKindsHandler(BaseHandler):
         if begin is None or limit is None:
             begin = 0
             limit = 50
-        return await shopping_mall_module.getKindsByShop(begin, limit)
+        out_data = await shopping_mall_module.getKindsByShop(begin, limit)
+        self.success_ret(out_data)
 
 class ShoppingMallMaterialsHandler(BaseHandler):
     def param_filter(self):
@@ -41,7 +42,7 @@ class ShoppingMallMaterialsHandler(BaseHandler):
 			}),
 		}
       
-    def get(self):
+    async def get(self):
         param = self.get_param()
         print(param, self._shop)
         if not self._shop:
@@ -57,9 +58,10 @@ class ShoppingMallMaterialsHandler(BaseHandler):
         if not begin or not limit:
             begin = 0
             limit = 50
-        shopping_mall_module.getMaterialsByShopAndKind(kind_id,begin,limit)
+        shopping_mall_materials = await shopping_mall_module.getMaterialsByShopAndKind(kind_id,begin,limit)
+        self.success_ret(shopping_mall_materials)
 
-class ShoppingMallHandler(BaseHandler):
+class ShoppingMallRecipeHandler(BaseHandler):
     def param_filter(self):
         return {
             'get': Schema({
@@ -67,14 +69,17 @@ class ShoppingMallHandler(BaseHandler):
              Required('type'): int,
             }),
         }
-    def get(self):
+    async def get(self):
         param = self.get_param()
-        shop_db = self.get_db_by_host()
-
-        if not shop_db:
+        print(param, self._shop)
+        if not self._shop:
             return self.fail_ret(data={'para':'error'})
-
-    @classmethod
-    def adjust(self, host):
-        return False
-
+        shop_code = self._shop.get('code')
+        shop_db = self._shop.get('db')
+        if not shop_db or not shop_code:
+            return self.fail_ret(data={'para':'error'})
+        shopping_mall_module = ShoppingMallModule.ShoppingMallModule(shop_db,shop_code)
+        begin = param.get('begin')
+        limit = param.get('limit')
+        shopping_mall_recipes = await shopping_mall_module.getDailyRecipeByShop(False, begin, limit)
+        self.success_ret(shopping_mall_recipes)
