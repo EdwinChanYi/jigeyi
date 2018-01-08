@@ -24,7 +24,7 @@ class ShoppingMallModel(BaseModel):
 
         rows = await self.all(sql, (),self.__shop_db)
         return rows
-
+    #获取食材列表
     async def findMaterialsByCodeAndMaterialKind(self, kind_id, begin, limit):
         sql = 'SELECT material_id,material_name,iamge,common_price,' \
               'discount_price,description,repertory FROM '+\
@@ -33,9 +33,15 @@ class ShoppingMallModel(BaseModel):
         rows = await self.all(sql, (kind_id, begin, limit), self.__shop_db)
         return rows
 
-
+    #获取食材类信息
     async def findKindsInfoByKindId(self, kinds):
         sql = 'SELECT kind_id,kind_name,image FROM '+self.__kind_table+' WHERE kind_id IN('+",".join(kinds)+')'
+        rows = await self.all(sql, (),self.__db)
+        return rows
+    #获取食谱列表
+    async def findRecipeList(self, is_own, begin, limit):
+        sql = 'SELECT '
         print(sql,self.__db)
         rows = await self.all(sql, (),self.__db)
+        print(rows)
         return rows

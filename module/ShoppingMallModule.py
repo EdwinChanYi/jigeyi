@@ -54,10 +54,8 @@ class ShoppingMallModule(BaseModule):
     async def getKindsByShop(self, begin, limit):
         shopping_mall = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
         shop_kinds = await shopping_mall.findMaterialKindsByCode(begin, limit)
-        print(shop_kinds)
         common_kinds = []
         [common_kinds.append(str(shop_kind.get('kind_id'))) for shop_kind in shop_kinds]
-        print(common_kinds)
         if common_kinds:
             kinds_info = await shopping_mall.findKindsInfoByKindId(common_kinds)
             return kinds_info
@@ -69,3 +67,7 @@ class ShoppingMallModule(BaseModule):
         shop_material_rows = await shopping_mall.findMaterialsByCodeAndMaterialKind(kind_id, begin, limit)
         return shop_material_rows
 
+    async def getDailyRecipeByShop(self, is_own, begin, limit):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shopping_mall_recipes = await shopping_mall_model.findRecipeList(is_own, begin, limit)
+        return shopping_mall_recipes
