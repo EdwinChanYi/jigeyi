@@ -7,6 +7,7 @@
 from handler import *
 
 route = [
+    (r"/", TestHandler, None, '检测入口'),
     # 测试
     (r"/test", TestHandler, None, '新增测试'),
     (r"/test/([0-9]+)", TestHandler, None, '删改查测试'),
