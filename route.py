@@ -14,8 +14,12 @@ route = [
     # 用户
     (r"/users", UserHandler, None, '新增用户，上线屏蔽'),
     (r"/users/([0-9]+)", UserHandler, None, '删改查用户'),
+    #商城
     (r"/shoppingmallKinds", ShoppingMallHandelr.ShoppingMallMaterialKindsHandler, None, '商城食材类列表'),
     (r"/shoppingmallMaterials", ShoppingMallHandelr.ShoppingMallMaterialsHandler, None, '商城食材列表'),
+    (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallRecipeDailyHandler, None, '商城每日菜谱'),
+    (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallMaterialDetailHandler, None, '商城食材详情'),
+    (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallRecipeDetailHandler, None, '商城菜谱详情'),
     # 商店
     (r"/shops/([0-9]+)", ShopHandler, None, '获取商店，上线屏蔽'),
 ]
