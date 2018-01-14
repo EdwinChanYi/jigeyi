@@ -159,3 +159,29 @@ class ShoppingMallRecipesRelatedToMaterilHandler(BaseHandler):
         material_id = param.get('material_id')
         shopping_mall_recipes = await shopping_mall_module.getRecipesRelatedMaterial(material_id)
         self.success_ret(shopping_mall_recipes)
+
+#获取用户购物车
+class ShoppingMallQueryUserShopCarHandler(BaseHandler):
+    def param_filter(self):
+        return {
+            'get': Schema({
+                Required('uid'): int,
+                Required('type'): int,
+            }),
+        }
+
+    async def get(self):
+        param = self.get_param()
+        print(param, self._shop)
+        if not self._shop:
+            return self.fail_ret(data={'para': 'error'})
+        shop_code = self._shop.get('code')
+        shop_db = self._shop.get('db')
+        if not shop_db or not shop_code:
+            return self.fail_ret(data={'para': 'error'})
+        shopping_mall_module = ShoppingMallModule.ShoppingMallModule(shop_db, shop_code)
+        uid = self.get_current_user()
+        begin = param.get('begin')
+        limit = param.get('limit')
+        shopping_mall_materials = await shopping_mall_module.getUserShopCar(uid,begin, limit)
+        self.success_ret(shopping_mall_materials)

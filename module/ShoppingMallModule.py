@@ -88,3 +88,9 @@ class ShoppingMallModule(BaseModule):
         shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
         shopping_mall_recipes = await shopping_mall_model.findRecipeRelatedMaterial(is_own, material_id)
         return shopping_mall_recipes
+
+    #获取用户购物车列表
+    async def getUserShopCar(self, uid, begin, limit):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shopping_mall_materials = await shopping_mall_model.findUserShopCarByUid(uid, begin, limit)
+        return shopping_mall_materials
