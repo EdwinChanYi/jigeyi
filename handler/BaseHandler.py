@@ -101,7 +101,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     # 错误返回
     def fail_ret(self, code=500, msg='error', data={}):
-        ret = {'code': code, 'msg': msg, 'data': data}
+        ret = {'code': code, 'msg': msg, 'data': {}}
         self.finish(ret)
 
     # 非业务异常统一处理，TODO 加告警

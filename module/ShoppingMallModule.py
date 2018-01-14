@@ -3,7 +3,6 @@
 # 商店模块
 
 from module import BaseModule,BaseObj
-from module import ShopModule
 from model import ShoppingMallModel
 import json
 class Material(BaseObj):
@@ -67,7 +66,25 @@ class ShoppingMallModule(BaseModule):
         shop_material_rows = await shopping_mall.findMaterialsByCodeAndMaterialKind(kind_id, begin, limit)
         return shop_material_rows
 
+    #获取每日菜谱
     async def getDailyRecipeByShop(self, is_own, begin, limit):
         shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
-        shopping_mall_recipes = await shopping_mall_model.findRecipeList(is_own, begin, limit)
+        shopping_mall_recipes = await shopping_mall_model.findDailyRecipeList(is_own, begin, limit)
+        return shopping_mall_recipes
+
+    #获取食材详情
+    async def getMaterialDetailByMaterialId(self, material_id):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shopping_mall_material = await shopping_mall_model.findMaterialDetail(material_id)
+        return shopping_mall_material
+    #获取菜谱详情
+    async def getRecipeDetailByRecipeId(self, is_own, recipe_id):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shopping_mall_recipe = await shopping_mall_model.findRecipeDetail(is_own, recipe_id)
+        return shopping_mall_recipe
+
+    #获取关联菜谱
+    async def getRecipesRelatedMaterial(self, is_own, material_id):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        shopping_mall_recipes = await shopping_mall_model.findRecipeRelatedMaterial(is_own, material_id)
         return shopping_mall_recipes
