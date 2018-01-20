@@ -90,6 +90,18 @@ class ShoppingMallModel(BaseModel):
         sql = 'SELECT * FROM ' + constant.MYSQL_SHOPPING_MALL_MATERIAL_RELATE_RECIPE_TABLE \
               + 'WHERE material_id=' + str(material_id) + ' LIMIT 10'
         print(sql, recipe_db)
-        rows = await self.all(sql, (), material_id)
+        rows = await self.all(sql, (), recipe_db)
+        print(rows)
+        return rows
+
+    #获取用户购物车列表
+    async def findUserShopCarByUid(self, uid, begin, limit):
+        if uid <= 0:
+            return
+        sql = 'SELECT * FROM ' + constant.MYSQL_SHOPPING_MALL_SHOP_CAR_TABLE \
+              + 'WHERE uid=' + str(uid) + 'ORDER BY material_id LIMIT ' + str(begin) +','+str(limit)
+        shop_db = self.__shop_db
+        print(sql, shop_db)
+        rows = await self.all(sql, (), shop_db)
         print(rows)
         return rows
