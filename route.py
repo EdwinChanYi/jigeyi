@@ -17,8 +17,20 @@ route = [
     (r"/shoppingmallKinds", ShoppingMallHandelr.ShoppingMallMaterialKindsHandler, None, '商城食材类列表'),
     (r"/shoppingmallMaterials", ShoppingMallHandelr.ShoppingMallMaterialsHandler, None, '商城食材列表'),
     (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallRecipeDailyHandler, None, '商城每日菜谱'),
-    (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallMaterialDetailHandler, None, '商城食材详情'),
-    (r"/shoppingmallRecipeDaily", ShoppingMallHandelr.ShoppingMallRecipeDetailHandler, None, '商城菜谱详情'),
+    (r"/shoppingmallMaterialDetail", ShoppingMallHandelr.ShoppingMallMaterialDetailHandler, None, '商城食材详情'),
+    (r"/shoppingmallRecipeDetail", ShoppingMallHandelr.ShoppingMallRecipeDetailHandler, None, '商城菜谱详情'),
+    #订单
+    (r"/order", OrderHandler.OrderQueryAllOrdersByUserHandler, None, '查询所有订单'),
+    (r"/order", OrderHandler.OrderQueryWaitPayOrdersByUserHandler, None, '查询待付款订单'),
+    (r"/order", OrderHandler.OrderQueryWaitSendOrdersByUserHandler, None, '查询待发货订单'),
+    (r"/order", OrderHandler.OrderQueryWaitMakeSureOrdersByUserHandler, None, '查询待确认订单'),
+    (r"/order", OrderHandler.OrderQueryFinishOrdersByUserHandler, None, '查询完成订单'),
+    (r"/order", OrderHandler.OrderPlaceOrdersHandler, None, '下单'),
+    (r"/order", OrderHandler.OrderSendOrderHandler, None, '发货'),
+    (r"/order", OrderHandler.OrderMakesureOrderHandler, None, '确认收货'),
+    (r"/order", OrderHandler.OrderDrawbackOrderHandler, None, '退款'),
+    (r"/order", OrderHandler.OrderCancelOrderHandler, None, '取消'),
+    (r"/order", OrderHandler.OrderPayOrderHandler, None, '付款'),
     # 商店
     (r"/shops/([0-9]+)", ShopHandler, None, '获取商店，上线屏蔽'),
 ]
