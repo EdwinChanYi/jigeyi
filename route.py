@@ -34,4 +34,6 @@ route = [
     (r"/order", OrderHandler.OrderPayOrderHandler, None, '付款'),
     # 商店
     (r"/shops/([0-9]+)", ShopHandler, None, '获取商店，上线屏蔽'),
+    # 微信
+    (r"/wechatVerify)", WechatVerifyHandler, None, '微信接入验证'),
 ]
