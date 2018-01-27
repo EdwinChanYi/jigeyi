@@ -14,7 +14,7 @@ class OrderModel(BaseModel):
 	#获取用户所有订单
 	async def findAllOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + ( constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' ORDER BY order_id LIMIT ' + str(begin)+ ','+str(limit)
+		      + ' WHERE uid=' + str(uid) + ' ORDER BY create_time desc LIMIT ' + str(begin)+ ','+str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows
@@ -22,28 +22,28 @@ class OrderModel(BaseModel):
 	#获取待付款订单
 	async def findWaitPayOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + ( constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' AND status=1 ORDER BY order_id LIMIT ' + str(begin)+ ','+str(limit)
+		      + ' WHERE uid=' + str(uid) + ' AND status=1 ORDER BY create_time desc LIMIT ' + str(begin)+ ','+str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows
 	#获取已发货订单
 	async def findWaitSendOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + ( constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' AND status=2 ORDER BY order_id LIMIT ' + str(begin)+ ','+str(limit)
+		      + ' WHERE uid=' + str(uid) + ' AND status=2 ORDER BY create_time desc LIMIT ' + str(begin)+ ','+str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows
 	#获取待收货订单
 	async def findWaitMakeSureOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + ( constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' AND status=3 ORDER BY order_id LIMIT ' + str(begin)+ ','+str(limit)
+		      + ' WHERE uid=' + str(uid) + ' AND status=3 ORDER BY create_time desc LIMIT ' + str(begin)+ ','+str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows
 	#获取已完成订单
 	async def findFinishOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + ( constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' AND status=4 ORDER BY order_id LIMIT ' + str(begin)+ ','+str(limit)
+		      + ' WHERE uid=' + str(uid) + ' AND status=4 ORDER BY create_time desc LIMIT ' + str(begin)+ ','+str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows
@@ -51,7 +51,7 @@ class OrderModel(BaseModel):
 	# 获取退款订单
 	async def findDrawbackOrdersByUid(self, uid, begin, limit):
 		sql = 'SELECT * FROM ' + (constant.MYSQL_ORDER_USER_SHOPPING_ORDER_TABLE) \
-		      + ' WHERE uid=' + str(uid) + ' AND status=5 ORDER BY order_id LIMIT ' + str(begin) + ',' + str(limit)
+		      + ' WHERE uid=' + str(uid) + ' AND status=5 ORDER BY create_time desc LIMIT ' + str(begin) + ',' + str(limit)
 		print(self.__shop_db, sql)
 		rows = await self.all(sql, (), self.__shop_db)
 		return rows

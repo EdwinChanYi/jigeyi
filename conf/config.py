@@ -30,10 +30,16 @@ db_config = {
 }
 
 redis_config = {
-    'redis' : {
+    'redis' : [{
         'host'      : 'localhost',
         'port'      : 6379,
         'db'        : 0,
         'password'  : ''
-    }
+    },
+    {
+        'host': 'localhost',
+        'port': 6380,
+        'db': 0,
+        'password': ''
+    }]
 }

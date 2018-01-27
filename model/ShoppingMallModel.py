@@ -4,6 +4,8 @@
 from model import BaseModel
 from conf import constant
 import sys
+import time
+from common import RedisMgr
 class ShoppingMallModel(BaseModel):
 
 
@@ -18,7 +20,7 @@ class ShoppingMallModel(BaseModel):
     async def findMaterialKindsByCode(self, begin, limit):
         sql = 'SELECT kind_id FROM '+(self.__material_table%self.__shop_code)\
               +' GROUP BY kind_id limit '+str(begin)+','+str(limit)
-
+        RedisMgr.getInstance().hset()
         print(self.__shop_db,sql)
 
         rows = await self.all(sql, (),self.__shop_db)
@@ -99,9 +101,49 @@ class ShoppingMallModel(BaseModel):
         if uid <= 0:
             return
         sql = 'SELECT * FROM ' + constant.MYSQL_SHOPPING_MALL_SHOP_CAR_TABLE \
-              + 'WHERE uid=' + str(uid) + 'ORDER BY material_id LIMIT ' + str(begin) +','+str(limit)
+              + 'WHERE uid=' + str(uid) + 'ORDER BY create_time LIMIT ' + str(begin) +','+str(limit)
         shop_db = self.__shop_db
         print(sql, shop_db)
         rows = await self.all(sql, (), shop_db)
+        print(rows)
+        return rows
+
+    #添加用户购物车
+    async def insertAddUserShopCarToUid(self, uid, material_info):
+        if uid <= 0:
+            return
+        sql = 'INSERT INTO ' + constant.MYSQL_SHOPPING_MALL_SHOP_CAR_TABLE \
+              + '(uid,shop_code,material_id,num,create_time) VALUES(' +\
+                str(uid)+',\''+self.__shop_code + '\',' + str(material_info.get('material_id'))\
+                +','+str(material_info.get('num'))+','+str(time.time()) +') ON DUPLICATE KEY UPDATE num = num+'\
+                +str(material_info.get('num'))
+        shop_db = self.__shop_db
+        print(sql, shop_db)
+        rows = await self.insert(sql, (), shop_db)
+        print(rows)
+        return rows
+
+    #修改用户购物车
+    async def updateUserShopCarToUid(self, uid, material_info):
+        if uid <= 0:
+            return
+        sql = 'UPDATE ' + constant.MYSQL_SHOPPING_MALL_SHOP_CAR_TABLE \
+              + ' set num=' +str(material_info.get('num'))\
+              +' WHERE uid='+str(uid)+' AND material_id='+material_info.get('material_id')
+        shop_db = self.__shop_db
+        print(sql, shop_db)
+        rows = await self.insert(sql, (), shop_db)
+        print(rows)
+        return rows
+
+    #删除购物车
+    async def deleteUserShopCarOfUid(self, uid, materials):
+        if uid <= 0:
+            return
+        sql = 'DELETE FROM ' + constant.MYSQL_SHOPPING_MALL_SHOP_CAR_TABLE \
+              + ' WHERE uid='+str(uid)+' AND material_id IN('+','.join(materials)+')'
+        shop_db = self.__shop_db
+        print(sql, shop_db)
+        rows = await self.delete(sql, (), shop_db)
         print(rows)
         return rows

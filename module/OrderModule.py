@@ -6,6 +6,7 @@ from module import BaseModule,BaseObj
 from model import OrderModel
 import json
 import time
+from common import RedisMgr
 class OrderModule(BaseModule):
 	def __init__(self, shop_db, shop_code):
 		self.__shop_db = shop_db

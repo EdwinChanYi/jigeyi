@@ -1,12 +1,12 @@
 CREATE TABLE `order_user_shopping_order` (
   `ordei_id` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '订单号',
-  `material_id` int(64) unsigned NOT NULL DEFAULT '' COMMENT '食材ID',
+  `wetchat_order_id` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '微信订单号',
   `status` int(10) unsigned NOT NULL DEFAULT '' COMMENT '订单状态 0表示无效 1表示未付款 2表示已发收货 3表示待收货 4表示已完成 5表示退款 6表示取消订单',
   `uid` int(64) unsigned NOT NULL DEFAULT '' COMMENT '用户ID',
   `shop_code` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '商店标识',
-  `price` DOUBLE(12,4) NOT NULL DEFAULT '0' COMMENT '食材成交单价',
-  `num` int(64) unsigned NOT NULL DEFAULT '' COMMENT '成交量',
-  `discount_ammount` DOUBLE(12,4) NOT NULL DEFAULT '0' COMMENT '优惠价钱',
+  `material_infos` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT
+    '购买物品列表 json格式 [{"material_id":11,"price":1.2,"num":10,"discount_ammount":1}]',
+  `contract` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '联系方式 {"phone":"13570432443","address":"世世代代"}',
   `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
   `pay_time` TIMESTAMP COMMENT '付款时间',
   `send_time` TIMESTAMP COMMENT '发货时间',

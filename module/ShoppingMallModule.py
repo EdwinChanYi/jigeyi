@@ -94,3 +94,23 @@ class ShoppingMallModule(BaseModule):
         shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
         shopping_mall_materials = await shopping_mall_model.findUserShopCarByUid(uid, begin, limit)
         return shopping_mall_materials
+
+    #添加用户购物车
+    async def addUserShopCar(self, uid, material_info):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        res = await shopping_mall_model.insertAddUserShopCarToUid(uid, material_info)
+        return res
+
+    #修改用户购物车
+    async def motifyUserShopCar(self, uid, material_info):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        res = await shopping_mall_model.updateUserShopCarToUid(uid, material_info)
+        return res
+
+    #删除用户购物车
+    async def deleteUserShopCar(self, uid, materials):
+        shopping_mall_model = ShoppingMallModel.ShoppingMallModel(self.__shop_db, self.__shop_code)
+        res = await shopping_mall_model.deleteUserShopCarOfUid(uid, materials)
+        return res
+
+    #
