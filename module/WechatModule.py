@@ -5,7 +5,7 @@
 from tornado.httpclient import AsyncHTTPClient, HTTPRequest
 from six.moves.urllib.parse import urlencode
 from tornado.gen import Return
-from wechatpy.utils import to_binary, json
+from common.Function import json_decode
 
 class WechatModule(object):
 
@@ -45,7 +45,7 @@ class WechatModule(object):
     async def _request_get(self, url, params):
         http_client = AsyncHTTPClient()
 
-        params = urlencode(dict((k, to_binary(v)) for k, v in params.items()))
+        params = urlencode(dict((k, v) for k, v in params.items()))
         _url = '{0}?{1}'.format(url, params)
 
         req = HTTPRequest(
@@ -66,7 +66,7 @@ class WechatModule(object):
 
     def _decode_result(self, res):
         try:
-            result = json.loads(res.body)
+            result = json_decode(res.body)
         except (TypeError, ValueError):
             return res
         return result
