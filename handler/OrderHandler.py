@@ -4,7 +4,7 @@
 from voluptuous import *
 from module import OrderModule
 from handler import BaseHandler
-
+import json
 #获取所有订单
 class OrderQueryAllOrdersByUserHandler(BaseHandler):
 	def param_filter(self):
@@ -167,7 +167,7 @@ class OrderPlaceOrdersHandler(BaseHandler):
 		out_data = await order_module.placeOneOrder(uid, orders_data)
 		self.success_ret(out_data)
 
-# 下单
+# 付款
 class OrderPayOrderHandler(BaseHandler):
 	def param_filter(self):
 		return {

@@ -34,7 +34,8 @@ class Db(object):
                 port = config.get('port')
                 charset = config.get('charset')
                 num = config.get('num')
-                cls.__pool[key] = PooledDB(pymysql, num, host=host, user=user, password=password, db=db, port=port, charset=charset, blocking=True, autocommit=True)
+                cls.__pool[key] = PooledDB(pymysql, num, host=host, user=user, password=password,
+                                           db=db, port=port, charset=charset, blocking=True, autocommit=True,cursorclass=pymysql.cursors.DictCursor)
 
     # 获取连接
     def conn(self, mod):
