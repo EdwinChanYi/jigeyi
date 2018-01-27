@@ -36,9 +36,9 @@ class RedisMgr:
 		conn = Redis.conn(str_key,mod)
 		return conn.hmset(str_key,mapping)
 
-	async def hmget(self, str_key, mod = 'redis'):
+	async def hmget(self, str_key, fields, mapping, mod = 'redis'):
 		conn = Redis.conn(str_key, mod)
-		return conn.hmget(str_key, mapping)
+		return conn.hmget(str_key, fields, mapping)
 
 	async def get(self, str_key, mod='redis'):
 		conn = Redis.conn(str_key,mod)
