@@ -18,6 +18,7 @@ class OrderModule(BaseModule):
 			return
 		order_modle = OrderModel.OrderModel(self.__shop_db, self.__shop_code)
 		all_orders = await order_modle.findAllOrdersByUid(uid, begin, limit)
+		print(self.__shop_db, all_orders)
 		return all_orders
 	#获取待付款订单
 	async def getWaitPayOrders(self, uid, begin, limit):
@@ -56,7 +57,7 @@ class OrderModule(BaseModule):
 
 	#下单
 	async def placeOneOrder(self, uid, infos):
-		if infos.empty():
+		if not len(infos):
 			return
 		order_id = self.__shop_code + str(uid)+str(time.time())
 		order_modle = OrderModel.OrderModel(self.__shop_db, self.__shop_code)
@@ -65,11 +66,10 @@ class OrderModule(BaseModule):
 
 	#付款
 	async def payOneOrder(self, uid, infos):
-		if infos.empty():
+		if not len(infos):
 			return
-		order_id = self.__shop_code + str(uid)+str(time.time())
 		order_modle = OrderModel.OrderModel(self.__shop_db, self.__shop_code)
-		status = await order_modle.updateOrderToHavePayed(uid, order_id)
+		status = await order_modle.updateOrderToHavePayed(uid, infos)
 		return status
 	#发货
 	async def SendOrder(self, order_id):
