@@ -39,9 +39,6 @@
    外网ip：120.77.39.207
    操作系统：Ubuntu 16.04.2
   - 登录账号(密码)：
-   root(Jigeyi666)     
-   lzh(lzh)    
-   cyw(cyw)
   - 数据库:
    host:rm-wz9w892l7tx6jooryco.mysql.rds.aliyuncs.com
    user:root
@@ -65,6 +62,8 @@
 2.在jigeyi.pth中输入/data/jigeyi/library保存退出
 3.则会引入/data/jigeyi/library下面的模块
 4.每将一个模块移至library，需在library下的__init__下import对应模块
+
+nohup python3 main.py >main.log 2>&1 &
 
 
 
