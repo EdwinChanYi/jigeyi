@@ -58,7 +58,7 @@ class BaseHandler(tornado.web.RequestHandler):
     # 登录验证,返回用户uid,暂时写死
     def get_current_user(self):
         print('get current user')
-        return 1
+        return 1234
 
     # 初始化
     async def prepare(self):
