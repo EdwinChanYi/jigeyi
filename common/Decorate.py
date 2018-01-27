@@ -9,7 +9,7 @@ from common.Function import json_encode,json_decode
 
 import datetime
 import json
-
+from common import RedisMgr
 class DateEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
@@ -43,9 +43,8 @@ def redisGet(key, param=[], json=True, write=True, expire=False):
                 redis_key = key % tuple(param)
             else :
                 redis_key = key
-
-            conn = Redis.conn()
-            res = conn.get(redis_key)
+            redis_mgr = RedisMgr.getInstance()
+            res = redis_mgr.get(redis_key)
             if res:
                 if json:
                     res = json_decode(res)
@@ -55,9 +54,9 @@ def redisGet(key, param=[], json=True, write=True, expire=False):
                     redis_val = res
                     if json:
                         redis_val = json_encode(res)
-                    conn.set(redis_key, redis_val)
+                    redis_mgr.set(redis_key, redis_val)
                     if expire:
-                        conn.expire(redis_key, expire)
+                        redis_mgr.expire(redis_key, expire)
             return res
         return cache
     return wrapper
@@ -86,8 +85,7 @@ def redisHget(key, field, param=[], json=True, write=True, expire=False):
                 redis_key = key % tuple(redis_param)
             else :
                 redis_key = key
-
-            conn = Redis.conn()
+            conn = RedisMgr.getInstance()
             res = conn.hget(redis_key, field)
             if res:
                 if json:
@@ -131,7 +129,7 @@ def redisHashObj(key, field=[], param=[], write=True, expire=False):
 
             from_redis = True   #是否成功从redis获取所有属性标志
             if field:
-                conn = Redis.conn()
+                conn = RedisMgr.getInstance()
                 redis_val = {}
                 for f in field:
                     val = conn.hget(redis_key, f)

@@ -14,14 +14,17 @@ class Redis(object):
     @classmethod
     def init(cls):
         if not cls.__pool:
-            for key in redis_config:
-                config = redis_config.get(key)
-                host = config.get('host')
-                password = config.get('password')
-                db = config.get('db')
-                port = config.get('port')
-                cls.__pool[key] = redis.ConnectionPool(host=host, password=password, db=db, port=port, decode_responses=True)
-
+            for key,configs in redis_config.items():
+                connections = []
+                for config in configs:
+                    host = config.get('host')
+                    password = config.get('password')
+                    db = config.get('db')
+                    port = config.get('port')
+                    connection = redis.ConnectionPool(host=host,
+                                password=password, db=db, port=port, decode_responses=True)
+                    connections.append(connection)
+                cls.__pool[key] = connections
     @classmethod
     def get_pool(cls, mod='redis'):
         if not cls.__pool:
@@ -30,9 +33,16 @@ class Redis(object):
 
 
     @classmethod
-    def conn(cls, mod='redis'):
-        pool = cls.get_pool(mod)
-        return redis.Redis(connection_pool=pool)
+    def conn(cls, hash_str, mod='redis'):
+        connections = cls.get_pool(mod)
+        connection = connections[cls.hashPool(connections.size(), hash_str)]
+        return redis.Redis(connection_pool=connection)
+
+    def hashPool(self, pool_num, hash_str='redis'):
+        hash_num = 0
+        for i in hash_str:
+            hash_num += ord(i)
+        return hash_num%pool_num
 
 if (__name__ == '__main__'):
     conn = Redis.conn()
