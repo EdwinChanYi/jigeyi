@@ -59,8 +59,51 @@ def aes_decrypt(val, key, mode=AES.MODE_CBC):
     val = cryptor.decrypt(a2b_hex(val))
     return val.decode('utf-8').rstrip('\0')
 
+from tornado.httpclient import AsyncHTTPClient, HTTPRequest, HTTPResponse
+from six.moves.urllib.parse import urlencode
+
+# 异步get
+async def async_get(url, params, responce_type='json', timeout=3):
+    http_client = AsyncHTTPClient()
+
+    params = urlencode(dict((k, v) for k, v in params.items()))
+    _url = '{0}?{1}'.format(url, params)
+    req = HTTPRequest(
+        url = _url,
+        method = "GET",
+        request_timeout = timeout
+    )
+    res = await http_client.fetch(req)
+
+    if res.error is not None:
+        return
+    if responce_type == 'json':
+        res = json_decode(res.body)
+    return res
+
+# 异步get
+async def async_post(url, params, responce_type='json', timeout=3):
+    http_client = AsyncHTTPClient()
+
+    params =urlencode(params)
+    req = HTTPRequest(
+        url = url,
+        method = "POST",
+        body = params,
+        request_timeout = timeout
+    )
+    res = await http_client.fetch(req)
+    if res.error is not None:
+        return
+    if responce_type == 'json':
+        res = json_decode(res.body)
+    return res
+
+
 if __name__ == "__main__":
-    r = []
-    r.append('a')
-    r.append('e')
-    print(','.join(r))
+    param = {
+        'a' : 1,
+        'b' : 'lzh',
+        'c' : 'hello'
+    }
+    async_get('www.baidu.com', param)
