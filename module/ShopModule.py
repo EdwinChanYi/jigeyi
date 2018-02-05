@@ -24,6 +24,12 @@ class ShopModule(BaseModule):
         shop = Shop(row)
         return shop
 
+    async def findByCode(self, code):
+        shop_model = ShopModel()
+        row = await shop_model.findByCode(code)
+        shop = Shop(row)
+        return shop
+
 class Shop(BaseObj):
 
     # 自增id,int

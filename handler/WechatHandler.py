@@ -3,7 +3,8 @@
 # 微信处理器
 
 from handler import BaseHandler
-from module import WechatModule
+from module import WechatModule,CookieModule,UserModule,ShopModule
+import time
 
 class WechatHandler(BaseHandler):
 
@@ -31,3 +32,37 @@ class WechatMenuHandler(BaseHandler):
         wechat_module = WechatModule()
         ret = await wechat_module.setMenu(shop)
         self.finish(ret)
+
+class WechatCallbackHandler(BaseHandler):
+    _init_shop = False
+
+    async def get(self):
+        print('oauth callback start')
+        param = self.get_param()
+        code = param.get('code')
+        shop_code = param.get('state')
+        print('code:'+code)
+        print('shop_code:'+shop_code)
+        shop_module = ShopModule()
+        shop = await shop_module.findByCode(shop_code)
+        if not shop:
+            raise Exception('state error')
+
+        wechat_model = WechatModule()
+        openid = await wechat_model.getOpenIdByCode(shop.get('appid'), shop.get('appsecret'), code)
+        if not openid:
+            raise Exception('get openid error')
+
+        user_module = UserModule(shop.get('db'))
+        user = await user_module.getUserByOpenid(openid)
+        if user:
+            uid = user.get('uid')
+        else:
+            uid = await user_module.createByOpenid(shop_code, openid)
+            if not uid:
+                raise Exception('create user error')
+
+        cookie_modle = CookieModule()
+        cookie = cookie_modle.cookie_encrypt(uid, time.time() + 3600)
+        self.set_secure_cookie('token', cookie, 1)
+        self.redirect('/index.html')

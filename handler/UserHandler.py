@@ -29,10 +29,10 @@ class UserHandler(BaseHandler):
         }
 
     async def get(self, id):
-        param = self.get_param()
         db = self._shop.get('db')
         user_module = UserModule(db)
-        row = await user_module.getUserInfo(id)
+        uid = self.get_current_user()
+        row = await user_module.getUserInfo(uid)
         self.success_ret(row)
 
     # async def post(self):

@@ -16,7 +16,7 @@ class WechatModule(object):
     #  微信授权地址
     AUTH_URI = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect'
     # 微信授权回调地址,code和state会带回到这个地址
-    AUTH_REDIRECT_URI = '/auth_callback'
+    AUTH_REDIRECT_URI = '/wechatAuthCallback'
     # 根据code获取openid或access_token
     GET_OPENID_URI = 'https://api.weixin.qq.com/sns/oauth2/access_token?'
 
@@ -38,42 +38,10 @@ class WechatModule(object):
             'code' : code,
             'grant_type' : 'authorization_code'
         }
-
-        res = await self._request_get(uri, params)
+        print('get openid param'+params)
+        res = await async_get(uri, params)
+        print('get opendi res:'+res)
         return res['open_id']
-
-
-    # get请求
-    async def _request_get(self, url, params):
-        http_client = AsyncHTTPClient()
-
-        params = urlencode(dict((k, v) for k, v in params.items()))
-        _url = '{0}?{1}'.format(url, params)
-
-        req = HTTPRequest(
-            url=_url,
-            method="GET",
-            request_timeout=self.timeout
-        )
-        res = await http_client.fetch(req)
-        if res.error is not None:
-            raise Exception('wechat error')
-
-        result = self._decode_result(res)
-
-        if 'errcode' in result and result['errcode'] != 0:
-            raise Exception('wechat error')
-
-        raise Return(result)
-
-    def _decode_result(self, res):
-        try:
-            result = json_decode(res.body)
-        except (TypeError, ValueError):
-            return res
-        return result
-
-
 
     async def getShopAccessToken(self, code):
         wechat_model = WechatModel()
