@@ -11,6 +11,7 @@ from common import Logger
 from model.ShopModel import *
 from module.BaseModule import BaseObj
 from common.Function import json_encode
+from module import CookieModule
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -57,8 +58,13 @@ class BaseHandler(tornado.web.RequestHandler):
 
     # 登录验证,返回用户uid,暂时写死
     def get_current_user(self):
-        print('get current user')
-        return 1
+        token = self.get_secure_cookie('token')
+        print('cookie token:'+token)
+        if not token:
+            return False
+        cookie_module = CookieModule()
+        uid = cookie_module.cookie_decrypt(token)
+        return uid
 
     # 初始化
     async def prepare(self):

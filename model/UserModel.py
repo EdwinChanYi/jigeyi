@@ -25,3 +25,13 @@ class UserModel(BaseModel):
         sql = 'delete from user where id = %s limit 1'
         ret = await self.update(sql, (id), self.get_db())
         return ret
+
+    async def findByOpenid(self, openid):
+        sql = 'select * from user where openid = %s limit 1'
+        row = await self.one(sql, (openid), self.get_db())
+        return row
+
+    async def createByOpenid(self, code, openid, register_time):
+        sql = 'insert into user (code, openid, register_time) value (%s, %s, %s)'
+        ret = await self.insert(sql, (code, openid, register_time), self.get_db())
+        return ret

@@ -4,6 +4,7 @@
 
 from module.BaseModule import BaseModule,BaseObj
 from model.UserModel import UserModel
+import time
 
 class UserModule(BaseModule):
 
@@ -22,6 +23,19 @@ class UserModule(BaseModule):
             return True
         else:
             return False
+
+    async def getUserByOpenid(self, openid):
+        user_model = UserModel(self._db)
+        row = await user_model.findByOpenid(openid)
+        if not row:
+            return User()
+        user = User(row)
+        return user
+
+    async def createByOpenid(self, code, openid):
+        user_model = UserModel(self._db)
+        ret = await user_model.createByOpenid(code, openid, time.time())
+        return ret
 
 class User(BaseObj):
 
