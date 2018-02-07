@@ -11,7 +11,7 @@ class WechatHandler(BaseHandler):
     async def get(self):
         shop = self._shop
         wechat_module = WechatModule()
-        uri = wechat_module.getAuthUri(shop, shop.get('code'))
+        uri = await wechat_module.getAuthUri(shop.get('code'))
         self.success_ret(uri)
 
     async def post(self):

@@ -59,9 +59,9 @@ class BaseHandler(tornado.web.RequestHandler):
     # 登录验证,返回用户uid,暂时写死
     def get_current_user(self):
         token = self.get_secure_cookie('token')
-        print('cookie token:'+token)
         if not token:
             return False
+        print('cookie token:' + token)
         cookie_module = CookieModule()
         uid = cookie_module.cookie_decrypt(token)
         return uid

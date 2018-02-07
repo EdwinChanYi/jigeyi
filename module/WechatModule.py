@@ -24,9 +24,12 @@ class WechatModule(object):
         pass;
 
     # 获取授权uri,此uri用于获取code
-    def getAuthUri(self, shop, state, scope='snsapi_base'):
-        app_id = shop.get('app_id')
-        auth_uri = self.AUTH_URI % (app_id, self.AUTH_REDIRECT_URI, scope, state)
+    async def getAuthUri(self, code, scope='snsapi_base'):
+        model = WechatModel()
+        shop_info = await model.findByCode(code)
+        if not shop_info:
+            raise Exception('no wuchat config with '+code)
+        auth_uri = self.AUTH_URI % (shop_info.get('appid'), self.AUTH_REDIRECT_URI, scope, code)
         return auth_uri
 
     # 根据code拿openid
