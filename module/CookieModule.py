@@ -29,8 +29,7 @@ class CookieModule(BaseModule):
         if not val:
             return False
         val = val.split(self.SEPARATOR)
-        # if val[0] != self.COOKIE_PRE or val[2] < time.time():
-        if val[0] != self.COOKIE_PRE:
+        if val[0] != self.COOKIE_PRE or float(val[2]) < time.time():
             return False
         return val[1]
 
