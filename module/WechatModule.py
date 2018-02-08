@@ -16,7 +16,7 @@ class WechatModule(object):
     #  微信授权地址
     AUTH_URI = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect'
     # 微信授权回调地址,code和state会带回到这个地址
-    AUTH_REDIRECT_URI = '/api/wechatAuthCallback'
+    AUTH_REDIRECT_URI = 'http://clw.jigeyi.xyz/api/wechatAuthCallback'
     # 根据code获取openid或access_token
     GET_OPENID_URI = 'https://api.weixin.qq.com/sns/oauth2/access_token?'
 
