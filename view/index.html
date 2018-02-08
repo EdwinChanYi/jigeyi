@@ -9,7 +9,6 @@ function oauth()
     //token不存在,跳转到授权url
     url = 'api/wechatOauthUrl';
     $.get(url, function(data){
-    alert(data)
     data = JSON.parse(data);
     alert(data.data)
       window.location.href = data.data;
