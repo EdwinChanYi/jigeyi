@@ -29,7 +29,7 @@ class WechatModule(object):
         shop_info = await model.findByCode(code)
         if not shop_info:
             raise Exception('no wuchat config with '+code)
-        auth_uri = self.AUTH_URI % (shop_info.get('appid'), self.AUTH_REDIRECT_URI, scope, code)
+        auth_uri = self.AUTH_URI % (shop_info.get('appid'), urlencode(self.AUTH_REDIRECT_URI), scope, code)
         return auth_uri
 
     # 根据code拿openid
