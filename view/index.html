@@ -21,7 +21,8 @@ function getUserInfo()
 {
   url = 'api/users';
   $.get(url, function(data){
-    alert(data.id);
+    alert(data.data.id);
+    alert(data.data.open_id);
   })
 }
 

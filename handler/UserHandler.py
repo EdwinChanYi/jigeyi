@@ -32,7 +32,6 @@ class UserHandler(BaseHandler):
         db = self._shop.get('db')
         user_module = UserModule(db)
         uid = self.get_current_user()
-        print('uid:'+uid)
         row = await user_module.getUserInfo(uid)
         self.success_ret(row)
 
