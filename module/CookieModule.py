@@ -16,8 +16,8 @@ class CookieModule(BaseModule):
     def cookie_encrypt(self, uid, expire_time):
         val = []
         val.append(self.COOKIE_PRE)
-        val.append(uid)
-        val.append(expire_time)
+        val.append(str(uid))
+        val.append(str(expire_time))
         val = self.SEPARATOR.join(val)
         return aes_encrypt(val, self.KEY)
 
@@ -29,7 +29,7 @@ class CookieModule(BaseModule):
         if not val:
             return False
         val = val.split(self.SEPARATOR)
-        if val.length != 3 or val[0] != self.COOKIE_PRE or not val[1].isdigit() or not val[2].isdigit() or int(val[2]) < time.time():
+        if val[0] != self.COOKIE_PRE or val[2] < time.time():
             return False
         return val[1]
 

@@ -28,7 +28,7 @@ class UserModule(BaseModule):
         user_model = UserModel(self._db)
         row = await user_model.findByOpenid(openid)
         if not row:
-            return User()
+            return None
         user = User(row)
         return user
 

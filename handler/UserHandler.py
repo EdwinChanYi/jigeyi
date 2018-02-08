@@ -28,7 +28,7 @@ class UserHandler(BaseHandler):
             }),
         }
 
-    async def get(self, id):
+    async def get(self):
         db = self._shop.get('db')
         user_module = UserModule(db)
         uid = self.get_current_user()
