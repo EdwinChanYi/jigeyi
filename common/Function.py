@@ -63,11 +63,15 @@ from tornado.httpclient import AsyncHTTPClient, HTTPRequest, HTTPResponse
 from six.moves.urllib.parse import urlencode
 
 # 异步get
-async def async_get(url, params, responce_type='json', timeout=3):
+async def async_get(url, params={}, responce_type='json', timeout=3):
     http_client = AsyncHTTPClient()
 
-    params = urlencode(dict((k, v) for k, v in params.items()))
-    _url = '{0}?{1}'.format(url, params)
+    if params:
+        params = urlencode(dict((k, v) for k, v in params.items()))
+        _url = '{0}?{1}'.format(url, params)
+    else :
+        _url = url
+    print('url:'+_url)
     req = HTTPRequest(
         url = _url,
         method = "GET",

@@ -19,7 +19,7 @@ class WechatModule(object):
     # 微信授权回调地址,code和state会带回到这个地址
     AUTH_REDIRECT_URI = 'http://clw.jigeyi.xyz/api/wechatAuthCallback'
     # 根据code获取openid或access_token
-    GET_OPENID_URI = 'https://api.weixin.qq.com/sns/oauth2/access_token?'
+    GET_OPENID_URI = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
 
     async def _request(self):
         pass;
@@ -35,16 +35,16 @@ class WechatModule(object):
 
     # 根据code拿openid
     async def getOpenIdByCode(self, app_id, app_secret, code):
-        uri = self.GET_OPENID_URI
-        params = {
-            'appid' : app_id,
-            'secret' : app_secret,
-            'code' : code,
-            'grant_type' : 'authorization_code'
-        }
-        print('get openid param'+params)
-        res = await async_get(uri, params)
-        print('get opendi res:'+res)
+        uri = self.GET_OPENID_URI % (app_id, app_secret, code)
+        # params = {
+        #     'appid' : app_id,
+        #     'secret' : app_secret,
+        #     'code' : code,
+        #     'grant_type' : 'authorization_code'
+        # }
+        # print(params)
+        res = await async_get(uri)
+        print(res)
         return res['open_id']
 
     async def getShopAccessToken(self, code):
