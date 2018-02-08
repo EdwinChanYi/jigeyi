@@ -1,13 +1,13 @@
 <html>
 <head>
-<script type="text/javascript" src="jquery.1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery.1.9.1.js"></script>
 <script type="text/javascript">
 function oauth()
 {
   c = getCookie('token');
   if (c == '') {
     //token不存在,跳转到授权url
-    url = 'http://clw.jigeyi.xyz/wechatOauthUrl';
+    url = 'api/wechatOauthUrl';
     $.get(url, function(data){
     alert(data)
     data = JSON.parse(data);
@@ -21,7 +21,7 @@ function oauth()
 
 function getUserInfo()
 {
-  url = 'http://clw.jigeyi.xyz/users';
+  url = 'api/users';
   $.get(url, function(data){
     $('#user').html(data);
   })
