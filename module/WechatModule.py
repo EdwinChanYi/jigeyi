@@ -8,6 +8,7 @@ from tornado.gen import Return
 from common.Function import json_decode,async_get,async_post
 from model import WechatModel
 import time
+from urllib import parse
 
 class WechatModule(object):
 
@@ -29,7 +30,7 @@ class WechatModule(object):
         shop_info = await model.findByCode(code)
         if not shop_info:
             raise Exception('no wuchat config with '+code)
-        auth_uri = self.AUTH_URI % (shop_info.get('appid'), urlencode(self.AUTH_REDIRECT_URI), scope, code)
+        auth_uri = self.AUTH_URI % (shop_info.get('appid'), parse.quote_plus(self.AUTH_REDIRECT_URI), scope, code)
         return auth_uri
 
     # 根据code拿openid
