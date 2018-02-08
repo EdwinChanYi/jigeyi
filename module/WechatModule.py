@@ -45,7 +45,7 @@ class WechatModule(object):
         # print(params)
         res = await async_get(uri)
         print(res)
-        return res['open_id']
+        return res['openid']
 
     async def getShopAccessToken(self, code):
         wechat_model = WechatModel()
