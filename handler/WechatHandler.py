@@ -53,7 +53,11 @@ class WechatCallbackHandler(BaseHandler):
         if not openid:
             raise Exception('get openid error')
 
-        user_module = UserModule(shop.get('db'))
+        shop_module = ShopModule()
+        row = await shop_module.findByCode(shop_code)
+        if not row:
+            raise Exception('shop not exit')
+        user_module = UserModule(row.get('db'))
         user = await user_module.getUserByOpenid(openid)
         if user:
             uid = user.get('uid')
