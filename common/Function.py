@@ -82,7 +82,7 @@ async def async_get(url, params={}, responce_type='json', timeout=3):
         return
     if responce_type == 'json':
         body = res.body.decode('utf-8')
-        res = json_decode(res.body)
+        res = json_decode(body)
     return res
 
 # 异步get
