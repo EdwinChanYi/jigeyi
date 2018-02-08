@@ -90,7 +90,9 @@ class WechatModule(object):
         res = await async_post(uri, param)
         return res
 
-
+    async def getInfoByCode(self, code):
+        model = WechatModel()
+        return await model.findByCode(code)
 
 
 

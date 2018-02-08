@@ -39,17 +39,17 @@ class WechatCallbackHandler(BaseHandler):
     async def get(self):
         print('oauth callback start')
         param = self.get_param()
+        print(param)
         code = param.get('code')
         shop_code = param.get('state')
         print('code:'+code)
         print('shop_code:'+shop_code)
-        shop_module = ShopModule()
-        shop = await shop_module.findByCode(shop_code)
-        if not shop:
-            raise Exception('state error')
 
-        wechat_model = WechatModule()
-        openid = await wechat_model.getOpenIdByCode(shop.get('appid'), shop.get('appsecret'), code)
+        wechat_module = WechatModule()
+        shop = await wechat_module.getInfoByCode(shop_code)
+        if not shop:
+            raise Exception('no wechat config about '+shop_code)
+        openid = await wechat_module.getOpenIdByCode(shop.get('appid'), shop.get('appsecret'), code)
         if not openid:
             raise Exception('get openid error')
 
