@@ -61,10 +61,10 @@ class BaseHandler(tornado.web.RequestHandler):
         token = self.get_secure_cookie('token')
         if not token:
             return False
-        print('token:')
-        print(token)
         cookie_module = CookieModule()
         uid = cookie_module.cookie_decrypt(token)
+        if uid == False:
+            self.set_secure_cookie('token', '')
         return uid
 
     # 初始化
