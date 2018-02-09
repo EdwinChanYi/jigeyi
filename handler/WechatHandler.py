@@ -3,7 +3,7 @@
 # 微信处理器
 
 from handler import BaseHandler
-from module import WechatModule,CookieModule,UserModule,ShopModule
+from module import WechatModule,CookieModule,UserModule,ShopModule,WechatPushModule
 import time
 
 class WechatHandler(BaseHandler):
@@ -68,5 +68,9 @@ class WechatCallbackHandler(BaseHandler):
 
         cookie_modle = CookieModule()
         cookie = cookie_modle.cookie_encrypt(uid, time.time() + 86500)#一天多一百秒，保证cookie有效期内有效
-        self.set_secure_cookie('token', cookie, 1)
+        # todo 测试不设置cookie，每次都授权
+        # self.set_secure_cookie('token', cookie, 1)
+        # 测试推送订单
+        push_module = WechatPushModule()
+        await push_module.template_push(code, openid, WechatPushModule.TEMPLATE_TYPE_ORDER, {'menu':'牛肉三百斤','address':'yy','link':'http://www.baidu.com'})
         self.redirect('/index.html')

@@ -95,6 +95,55 @@ class WechatModule(object):
         return await model.findByCode(code)
 
 
+class WechatPushModule(object):
+    # 模板推送url
+    TEMPLATE_PUSH_URL = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s'
+    # 订单模板id，参数：menu，address，link
+    TEMPLATE_ID_ORDER = 'rryzzY9ga58K94J48mNN4aeQ0xyhthfftmWGP5TavMU'
 
+    # 模板推送类型，订单类型
+    TEMPLATE_TYPE_ORDER = 'order'
 
-
+    @classmethod
+    async def template_push(cls, shop_code, openid, type, param={}):
+        print('template start')
+        print(shop_code)
+        print(openid)
+        print(type)
+        print(param)
+        if not openid or not type:
+            raise Exception('template push error, param missing')
+        wechat_module = WechatModule()
+        access_token = await wechat_module.getShopAccessToken(shop_code)
+        print('access_token:'+access_token)
+        if not access_token:
+            raise Exception('get shop access_token error, code:'+shop_code)
+        url = cls.TEMPLATE_PUSH_URL % (access_token)
+        if type == cls.TEMPLATE_TYPE_ORDER:
+            if not param.get('menu') or not param.get('address'):
+                raise Exception('template order push error, param missing')
+            menu = param.get('menu')
+            address = param.get('address')
+            link = param.get('link')
+            req_param = {
+               "touser" : openid,
+               "template_id" : cls.TEMPLATE_ID_ORDER,
+               "url" : link,
+               "data" : {
+                   "menu" : {
+                       "value" : menu,
+                       "color" : "#173177"
+                   },
+                   "address" : {
+                       "value" : address,
+                       "color" : "#173177"
+                   }
+               }
+            }
+            res = await async_post(url, req_param)
+            if res and int(res.get('errcode') == 0:
+                return True
+            else:
+                return False
+        else:
+            return False
