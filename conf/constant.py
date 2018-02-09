@@ -1,3 +1,4 @@
+DOCUMENT_ROOT = '/data/jigeyi'
 # 业务异常
 bus_e = {
     # 同一业务业务异常编号相邻

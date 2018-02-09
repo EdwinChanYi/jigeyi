@@ -168,8 +168,7 @@ def apiCounter(max=0, file='api_timer.log'):
             time_length = end - start   #函数消耗时间
             print('length',time_length)
             if max <= 0 or time_length > max:
-                log = Logger.get_log(file)
-                log.info('function['+func.__name__+'],time['+str(time_length)+']')
+                Logger.log('api-count', 'function['+func.__name__+'],time['+str(time_length)+']', True)
             return res
         return count
     return wrapper

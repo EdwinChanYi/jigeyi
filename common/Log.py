@@ -6,35 +6,33 @@ import time
 import os
 import logging
 import logging.handlers
+from conf.constant import *
 
 class Logger(object):
 
+    # 日志通用函数
+    # file:写入的文件名，多个单词建议用-隔开，如，access-log
+    # message:写入的内容
+    # divide:是否按月拆分，是的话文件名后面会加上日期，如main-2018-02-09.log
     @staticmethod
-    def get_log(filename='main.log', divide=False):
-
+    def log(file, message, divide=False, level='info'):
+        if not file or not message:
+            return
         if divide:
             ymd = time.strftime('%Y-%m-%d', time.localtime(time.time()))
-            filename = filename + '-' + ymd
-        filename = os.path.abspath(os.path.join(os.getcwd())) + '/data/' + filename
-
-        handler = logging.handlers.RotatingFileHandler(filename)
-        fmt = '%(asctime)s - %(filename)s:%(lineno)s - [thread:%(thread)s] - [process:%(process)s] - %(message)s'
-        formatter = logging.Formatter(fmt)
-        handler.setFormatter(formatter)
-
-        logger = logging.getLogger('tst')
-        logger.addHandler(handler)
-        logger.setLevel(logging.DEBUG)
-
-        return logger
+            file = file + '-' + ymd
+        file = DOCUMENT_ROOT + '/' + file + '.log'
+        LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
+        DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+        logging.basicConfig(filename=file, level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
+        if level == 'debug':
+            logging.debug(message)
+        elif level == 'warning':
+            logging.warning(message)
+        elif level == 'error':
+            logging.error(message)
+        else:
+            logging.info(message)
 
 if __name__ == "__main__":
-    # a = os.getcwd()
-    # print(a)
-    # b = os.path.join(a, 'log.txt')
-    # print(b)
-    # Logger.get_log('1.log')
-    # print(os.path.abspath(os.path.join(os.getcwd(), "..")))
-
-    log = Logger.get_log('abc.log')
-    log.info('hello123')
+    Logger.log('main', 'test', True, 'error')

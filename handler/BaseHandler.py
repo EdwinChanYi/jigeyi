@@ -75,8 +75,7 @@ class BaseHandler(tornado.web.RequestHandler):
         remote_ip = self.request.remote_ip
         method = self.request.method
         msg = "start:uid[%s],method[%s],remote_ip[%s],uri[%s],param[%s]" % (uid, method, remote_ip, uri, params)
-        log = Logger.get_log('main.log', True)
-        log.info(msg)
+        Logger.log('main', msg, True)
         # 初始化商店信息
         if self._init_shop:
             shop_model = ShopModel()
@@ -90,8 +89,7 @@ class BaseHandler(tornado.web.RequestHandler):
         remote_ip = self.request.remote_ip
         method = self.request.method
         msg = "end:uid[%s],method[%s],remote_ip[%s],uri[%s],param[%s]" % (uid, method, remote_ip, uri, params)
-        log = Logger.get_log('main.log', True)
-        log.info(msg)
+        Logger.log('main', msg, True)
 
     # 返回json
     def json_ret(self, code=200, msg='', data={}):
