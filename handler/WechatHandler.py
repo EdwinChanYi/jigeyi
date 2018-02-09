@@ -67,6 +67,6 @@ class WechatCallbackHandler(BaseHandler):
                 raise Exception('create user error')
 
         cookie_modle = CookieModule()
-        cookie = cookie_modle.cookie_encrypt(uid, time.time() + 3600)
+        cookie = cookie_modle.cookie_encrypt(uid, time.time() + 86500)#一天多一百秒，保证cookie有效期内有效
         self.set_secure_cookie('token', cookie, 1)
         self.redirect('/index.html')
