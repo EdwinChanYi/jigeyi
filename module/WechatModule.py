@@ -9,7 +9,6 @@ from common.Function import json_decode,async_get,async_post
 from model import WechatModel
 import time
 from urllib import parse
-import collections
 
 class WechatModule(object):
 
@@ -138,20 +137,6 @@ class WechatPushModule(object):
                }
             }
 
-            # req_param = collections.OrderedDict()
-            # req_param['touser'] = openid
-            # req_param['template_id'] = cls.TEMPLATE_ID_ORDER
-            # req_param['url'] = link
-            # req_param['data'] = {
-            #    "menu" : {
-            #        "value" : menu,
-            #        "color" : "#173177"
-            #    },
-            #    "address" : {
-            #        "value" : address,
-            #        "color" : "#173177"
-            #    }
-            # }
             res = await async_post(url, req_param)
             if res and int(res.get('errcode')) == 0:
                 return True
