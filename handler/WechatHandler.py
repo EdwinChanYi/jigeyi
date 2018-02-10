@@ -25,7 +25,12 @@ class WechatHandler(BaseHandler):
             'address' : 'yy',
             'link' : 'http://www.baidu.com'
         }
-        res = await module.template_push('clw', openid, WechatPushModule.TEMPLATE_TYPE_ORDER, param)
+        shop = self._shop
+        user_module = UserModule(shop.get('db'))
+        user = await user_module.getUserInfo(uid)
+        if not user:
+            self.json_ret(201, 'user not exits')
+        res = await module.template_push('clw', user.open_id, WechatPushModule.TEMPLATE_TYPE_ORDER, param)
         self.success_ret(res)
 
 class WechatVerifyHandler(BaseHandler):
