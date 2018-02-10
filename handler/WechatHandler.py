@@ -5,7 +5,7 @@
 from handler import BaseHandler
 from module import WechatModule,CookieModule,UserModule,ShopModule,WechatPushModule
 import time
-import tornado.web
+from tornado.web import authenticated
 
 class WechatHandler(BaseHandler):
 
@@ -77,5 +77,3 @@ class WechatCallbackHandler(BaseHandler):
         cookie = cookie_modle.cookie_encrypt(uid, time.time() + 86500)#一天多一百秒，保证cookie有效期内有效
         self.set_secure_cookie('token', cookie, 1)
         self.redirect('/index.html')
-
-    async
