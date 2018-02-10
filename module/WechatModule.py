@@ -9,6 +9,7 @@ from common.Function import json_decode,async_get,async_post
 from model import WechatModel
 import time
 from urllib import parse
+import collections
 
 class WechatModule(object):
 
@@ -120,19 +121,34 @@ class WechatPushModule(object):
             menu = param.get('menu')
             address = param.get('address')
             link = param.get('link')
-            req_param = {
-               "touser" : openid,
-               "template_id" : cls.TEMPLATE_ID_ORDER,
-               "url" : link,
-               "data" : {
-                   "menu" : {
-                       "value" : menu,
-                       "color" : "#173177"
-                   },
-                   "address" : {
-                       "value" : address,
-                       "color" : "#173177"
-                   }
+            # req_param = {
+            #    "touser" : openid,
+            #    "template_id" : cls.TEMPLATE_ID_ORDER,
+            #    "url" : link,
+            #    "data" : {
+            #        "menu" : {
+            #            "value" : menu,
+            #            "color" : "#173177"
+            #        },
+            #        "address" : {
+            #            "value" : address,
+            #            "color" : "#173177"
+            #        }
+            #    }
+            # }
+
+            req_param = collections.OrderedDict()
+            b['touser'] = openid
+            b['template_id'] = cls.TEMPLATE_ID_ORDER
+            b['url'] = link
+            b['data'] = {
+               "menu" : {
+                   "value" : menu,
+                   "color" : "#173177"
+               },
+               "address" : {
+                   "value" : address,
+                   "color" : "#173177"
                }
             }
             res = await async_post(url, req_param)
