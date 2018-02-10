@@ -88,7 +88,7 @@ async def async_get(url, params={}, responce_type='json', timeout=3):
 # 异步post
 async def async_post(url, params, responce_type='json', timeout=3):
     http_client = AsyncHTTPClient()
-
+    params = json_encode(params)
     req = HTTPRequest(
         url = url,
         method = "POST",
