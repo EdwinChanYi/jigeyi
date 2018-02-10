@@ -141,7 +141,7 @@ class WechatPushModule(object):
                }
             }
             res = await async_post(url, req_param)
-            if res and int(res.get('errcode') == 0:
+            if res and int(res.get('errcode')) == 0:
                 return True
             else:
                 return False

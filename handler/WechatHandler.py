@@ -72,5 +72,5 @@ class WechatCallbackHandler(BaseHandler):
         # self.set_secure_cookie('token', cookie, 1)
         # 测试推送订单
         push_module = WechatPushModule()
-        await push_module.template_push(code, openid, WechatPushModule.TEMPLATE_TYPE_ORDER, {'menu':'牛肉三百斤','address':'yy','link':'http://www.baidu.com'})
+        await push_module.template_push(shop_code, openid, WechatPushModule.TEMPLATE_TYPE_ORDER, {'menu':'牛肉三百斤','address':'yy','link':'http://www.baidu.com'})
         self.redirect('/index.html')
