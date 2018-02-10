@@ -88,6 +88,7 @@ class WechatModule(object):
                   "url":"http://clw.jigeyi.xyz/index.html"
              }]
         }
+        param = urlencode(param)
         res = await async_post(uri, param)
         return res
 

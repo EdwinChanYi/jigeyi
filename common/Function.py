@@ -71,7 +71,7 @@ async def async_get(url, params={}, responce_type='json', timeout=3):
         _url = '{0}?{1}'.format(url, params)
     else :
         _url = url
-    print('url:'+_url)
+
     req = HTTPRequest(
         url = _url,
         method = "GET",
@@ -89,15 +89,12 @@ async def async_get(url, params={}, responce_type='json', timeout=3):
 async def async_post(url, params, responce_type='json', timeout=3):
     http_client = AsyncHTTPClient()
 
-    params =urlencode(params)
     req = HTTPRequest(
         url = url,
         method = "POST",
         body = params,
         request_timeout = timeout
     )
-    print ('param')
-    print(params)
     res = await http_client.fetch(req)
     print (res.body.decode('utf-8'))
     if res.error is not None:
@@ -106,12 +103,3 @@ async def async_post(url, params, responce_type='json', timeout=3):
         body = res.body.decode('utf-8')
         res = json_decode(body)
     return res
-
-
-if __name__ == "__main__":
-    param = {
-        'a' : 1,
-        'b' : 'lzh',
-        'c' : 'hello'
-    }
-    async_get('www.baidu.com', param)
