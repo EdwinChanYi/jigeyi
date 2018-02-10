@@ -139,10 +139,10 @@ class WechatPushModule(object):
             # }
 
             req_param = collections.OrderedDict()
-            b['touser'] = openid
-            b['template_id'] = cls.TEMPLATE_ID_ORDER
-            b['url'] = link
-            b['data'] = {
+            req_param['touser'] = openid
+            req_param['template_id'] = cls.TEMPLATE_ID_ORDER
+            req_param['url'] = link
+            req_param['data'] = {
                "menu" : {
                    "value" : menu,
                    "color" : "#173177"
