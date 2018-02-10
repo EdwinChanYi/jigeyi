@@ -22,12 +22,7 @@ function getUserInfo()
   var url = 'api/users';
   $.get(url, function(data){
       data.data = JSON.parse(data.data);
-      alert(data.data);
-      url = 'api/wechatPush';
-      $.post(url, function(data){
-        data.data = JSON.parse(data.data);
-        alert(data.data);
-      })
+      alert(data.data.open_id);
   })
 }
 

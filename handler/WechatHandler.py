@@ -15,9 +15,10 @@ class WechatHandler(BaseHandler):
         uri = await wechat_module.getAuthUri(shop.get('code'))
         self.success_ret(uri)
 
-    @authenticated
+    # @authenticated
     async def post(self):
-        uid = self.current_user
+        # uid = self.current_user
+        uid = 1
         print('template push uid:'+uid)
         module = WechatPushModule()
         param = {
@@ -25,8 +26,8 @@ class WechatHandler(BaseHandler):
             'address' : 'yy',
             'link' : 'http://www.baidu.com'
         }
-        shop = self._shop
-        user_module = UserModule(shop.get('db'))
+
+        user_module = UserModule('clw')
         user = await user_module.getUserInfo(uid)
         if not user:
             self.json_ret(201, 'user not exits')
