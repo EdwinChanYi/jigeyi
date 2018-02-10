@@ -39,4 +39,5 @@ route = [
     (r"/wechatVerify", WechatVerifyHandler, None, '微信接入验证'),
     (r"/wechatMenu", WechatMenuHandler, None, '微信公众号菜单设置'),
     (r"/wechatAuthCallback", WechatCallbackHandler, None, '微信授权回调'),
+    (r"/wechatPush", WechatHandler, None, '模板推送,测试'),
 ]

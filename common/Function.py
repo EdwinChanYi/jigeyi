@@ -99,6 +99,7 @@ async def async_post(url, params, responce_type='json', timeout=3):
     print(params)
     res = await http_client.fetch(req)
     print(res)
+    print (res.body)
     if res.error is not None:
         return
     if responce_type == 'json':

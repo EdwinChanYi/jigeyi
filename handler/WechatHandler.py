@@ -5,6 +5,7 @@
 from handler import BaseHandler
 from module import WechatModule,CookieModule,UserModule,ShopModule,WechatPushModule
 import time
+import tornado.web
 
 class WechatHandler(BaseHandler):
 
@@ -14,9 +15,18 @@ class WechatHandler(BaseHandler):
         uri = await wechat_module.getAuthUri(shop.get('code'))
         self.success_ret(uri)
 
+    @authenticated
     async def post(self):
-        param = self.get_param()
-        self.get_current_user()
+        uid = self.current_user
+        print('template push uid:'+uid)
+        module = WechatPushModule()
+        param = {
+            'menu' : "牛肉三百斤",
+            'address' : 'yy',
+            'link' : 'http://www.baidu.com'
+        }
+        res = await module.template_push('clw', openid, WechatPushModule.TEMPLATE_TYPE_ORDER, param)
+        self.success_ret(res)
 
 class WechatVerifyHandler(BaseHandler):
 
@@ -39,11 +49,8 @@ class WechatCallbackHandler(BaseHandler):
     async def get(self):
         print('oauth callback start')
         param = self.get_param()
-        print(param)
         code = param.get('code')
         shop_code = param.get('state')
-        print('code:'+code)
-        print('shop_code:'+shop_code)
 
         wechat_module = WechatModule()
         shop = await wechat_module.getInfoByCode(shop_code)
@@ -68,9 +75,7 @@ class WechatCallbackHandler(BaseHandler):
 
         cookie_modle = CookieModule()
         cookie = cookie_modle.cookie_encrypt(uid, time.time() + 86500)#一天多一百秒，保证cookie有效期内有效
-        # todo 测试不设置cookie，每次都授权
-        # self.set_secure_cookie('token', cookie, 1)
-        # 测试推送订单
-        push_module = WechatPushModule()
-        await push_module.template_push(shop_code, openid, WechatPushModule.TEMPLATE_TYPE_ORDER, {'menu':'牛肉三百斤','address':'yy','link':'http://www.baidu.com'})
+        self.set_secure_cookie('token', cookie, 1)
         self.redirect('/index.html')
+
+    async
