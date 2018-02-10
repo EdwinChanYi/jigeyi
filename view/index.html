@@ -22,8 +22,11 @@ function getUserInfo()
   var url = 'api/users';
   $.get(url, function(data){
       data.data = JSON.parse(data.data);
-      alert(data.data.open_id);
-  })
+      alert(data.data);
+  });
+    $.post('api/wechatPush', function(data){
+          alert(data.code);
+      });
 }
 
 function getCookie(c_name)

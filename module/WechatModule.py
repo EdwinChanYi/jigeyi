@@ -87,7 +87,6 @@ class WechatModule(object):
                   "url":"http://clw.jigeyi.xyz/index.html"
              }]
         }
-        param = urlencode(param)
         res = await async_post(uri, param)
         return res
 
@@ -111,7 +110,6 @@ class WechatPushModule(object):
             raise Exception('template push error, param missing')
         wechat_module = WechatModule()
         access_token = await wechat_module.getShopAccessToken(shop_code)
-        print('access_token:'+access_token)
         if not access_token:
             raise Exception('get shop access_token error, code:'+shop_code)
         url = cls.TEMPLATE_PUSH_URL % (access_token)
