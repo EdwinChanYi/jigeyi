@@ -106,11 +106,6 @@ class WechatPushModule(object):
 
     @classmethod
     async def template_push(cls, shop_code, openid, type, param={}):
-        print('template start')
-        print(shop_code)
-        print(openid)
-        print(type)
-        print(param)
         if not openid or not type:
             raise Exception('template push error, param missing')
         wechat_module = WechatModule()
