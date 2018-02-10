@@ -9,7 +9,7 @@ function oauth()
     //token不存在,跳转到授权url
     url = 'api/wechatOauthUrl';
     $.get(url, function(data){
-    alert(data.data)
+      alert(data.data)
       window.location.href = data.data;
     });
   } else {
@@ -19,10 +19,15 @@ function oauth()
 
 function getUserInfo()
 {
-  url = 'api/users';
+  var url = 'api/users';
   $.get(url, function(data){
-    alert(data.data.id);
-    alert(data.data.open_id);
+      data.data = JSON.parse(data.data);
+      alert(data.data);
+      url = 'api/wechatPush';
+      $.post(url, function(data){
+        data.data = JSON.parse(data.data);
+        alert(data.data);
+      })
   })
 }
 
