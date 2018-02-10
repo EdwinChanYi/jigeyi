@@ -122,36 +122,36 @@ class WechatPushModule(object):
             menu = param.get('menu')
             address = param.get('address')
             link = param.get('link')
-            # req_param = {
-            #    "touser" : openid,
-            #    "template_id" : cls.TEMPLATE_ID_ORDER,
-            #    "url" : link,
-            #    "data" : {
-            #        "menu" : {
-            #            "value" : menu,
-            #            "color" : "#173177"
-            #        },
-            #        "address" : {
-            #            "value" : address,
-            #            "color" : "#173177"
-            #        }
-            #    }
-            # }
-
-            req_param = collections.OrderedDict()
-            req_param['touser'] = openid
-            req_param['template_id'] = cls.TEMPLATE_ID_ORDER
-            req_param['url'] = link
-            req_param['data'] = {
-               "menu" : {
-                   "value" : menu,
-                   "color" : "#173177"
-               },
-               "address" : {
-                   "value" : address,
-                   "color" : "#173177"
+            req_param = {
+               "touser" : openid,
+               "template_id" : cls.TEMPLATE_ID_ORDER,
+               "url" : link,
+               "data" : {
+                   "menu" : {
+                       "value" : menu,
+                       "color" : "#173177"
+                   },
+                   "address" : {
+                       "value" : address,
+                       "color" : "#173177"
+                   }
                }
             }
+
+            # req_param = collections.OrderedDict()
+            # req_param['touser'] = openid
+            # req_param['template_id'] = cls.TEMPLATE_ID_ORDER
+            # req_param['url'] = link
+            # req_param['data'] = {
+            #    "menu" : {
+            #        "value" : menu,
+            #        "color" : "#173177"
+            #    },
+            #    "address" : {
+            #        "value" : address,
+            #        "color" : "#173177"
+            #    }
+            # }
             res = await async_post(url, req_param)
             if res and int(res.get('errcode')) == 0:
                 return True
